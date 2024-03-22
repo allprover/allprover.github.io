@@ -47,7 +47,7 @@
 
 
 <p><strong>样例</strong></p>
-<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20240321175529789.png" alt="image-20240321175529789"></p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/image-20240321175529789.png" alt="image-20240321175529789"></p>
 <h3 id="3-配置看板娘"><a href="#3-配置看板娘" class="headerlink" title="3. 配置看板娘"></a>3. 配置看板娘</h3><p>安装插件</p>
 <figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -save hexo-helper-live2d</span><br></pre></td></tr></table></figure>
 
@@ -60,7 +60,7 @@
 
 
 <p><strong>样例</strong></p>
-<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20240321180000858.png" alt="image-20240321180000858"></p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/image-20240321180000858.png" alt="image-20240321180000858"></p>
 <h3 id="4-更换博客背景"><a href="#4-更换博客背景" class="headerlink" title="4. 更换博客背景"></a>4. 更换博客背景</h3><p>把准备好的背景图放入 <code>themes\hexo-theme-next\source\images</code> 中</p>
 <p>新建 <code>hexo/source/_data/styles.styl</code></p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line">//背景图片设置</span><br><span class="line">body &#123;</span><br><span class="line">    background-image: url(/images/background.jpg);</span><br><span class="line">    background-repeat: no-repeat;</span><br><span class="line">    background-attachment: fixed;</span><br><span class="line">    background-size: 100% 100%;</span><br><span class="line">    //调整透明度</span><br><span class="line">    opacity: 0.85;</span><br><span class="line">    //可选</span><br><span class="line">    +mobile()&#123;</span><br><span class="line">      background-image: url(https://ziyuan.lruihao.cn/images/bg_cell.png);</span><br><span class="line">      background-size: cover;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -168,6 +168,25 @@
 <h1 id="2-git-配置"><a href="#2-git-配置" class="headerlink" title="2. git 配置"></a>2. git 配置</h1><p><strong>站点文件</strong></p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">秦越人的博客</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;Practice Tests Truth&#x27;</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;Welcome to my world&#x27;</span></span><br><span class="line"><span class="attr">keywords:</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">Qinyueren</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">http://qinyueren.gitee.io</span></span><br><span class="line"><span class="attr">root:</span> <span class="string">/learn_blog/</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink_defaults:</span></span><br><span class="line"><span class="attr">pretty_urls:</span></span><br><span class="line">  <span class="attr">trailing_index:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;index.html&#x27; from permalinks</span></span><br><span class="line">  <span class="attr">trailing_html:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;.html&#x27; from permalinks</span></span><br><span class="line">  </span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&#x27;git&#x27;</span></span><br><span class="line">  <span class="attr">repo:</span>  <span class="string">https://gitee.com/qinyueren/learn_blog.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">hexo-theme-next</span></span><br></pre></td></tr></table></figure>
 
+
+
+<h1 id="3-设置图床"><a href="#3-设置图床" class="headerlink" title="3. 设置图床"></a>3. 设置图床</h1><h2 id="3-1-安装Picgo"><a href="#3-1-安装Picgo" class="headerlink" title="3.1 安装Picgo"></a>3.1 安装Picgo</h2><p>下载picgo安装包</p>
+<p>https:&#x2F;&#x2F;<a href="https://so.csdn.net/so/search?q=github&spm=1001.2101.3001.7020">github</a>.com&#x2F;Molunerfinn&#x2F;PicGo&#x2F;releases</p>
+<p>在picgo界面</p>
+<p>安装gitee-uploader插件</p>
+<h2 id="3-2-新建图床库"><a href="#3-2-新建图床库" class="headerlink" title="3.2 新建图床库"></a>3.2 新建图床库</h2><p>gitee新建仓库</p>
+<ul>
+<li>输入仓库名称</li>
+<li>仓库设置公开</li>
+<li>勾选使用Readme文件初始化仓库（会自动插件master分支</li>
+</ul>
+<h2 id="3-3-配置picgo"><a href="#3-3-配置picgo" class="headerlink" title="3.3 配置picgo"></a>3.3 配置picgo</h2><ul>
+<li>repo: 用户名&#x2F;仓库名</li>
+<li>branch: master</li>
+<li>token: 私人令牌</li>
+</ul>
+<h2 id="3-4-typroa配置Picgo"><a href="#3-4-typroa配置Picgo" class="headerlink" title="3.4 typroa配置Picgo"></a>3.4 typroa配置Picgo</h2><p>文件–&gt;偏好设置–&gt;图像-》上传图片，对网络位置应用上述规则</p>
+<p>设置picgo路径，并验证</p>
 ]]></content>
       <categories>
         <category>计算机</category>
