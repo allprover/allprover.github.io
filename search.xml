@@ -565,4 +565,103 @@
         <category>梦幻西游</category>
       </categories>
   </entry>
+  <entry>
+    <title>Deepfake Detection All model 一览</title>
+    <url>/learn_blog/2024/03/22/%E6%89%80%E6%9C%89%E6%A8%A1%E5%9E%8B%E4%B8%80%E8%A7%88/</url>
+    <content><![CDATA[<h1 id="Deep-Learing-深度学习"><a href="#Deep-Learing-深度学习" class="headerlink" title="Deep Learing(深度学习)"></a>Deep Learing(深度学习)</h1><h2 id="CNN-卷积神经网络"><a href="#CNN-卷积神经网络" class="headerlink" title="CNN(卷积神经网络)"></a>CNN(卷积神经网络)</h2><ul>
+<li>XceptionNet</li>
+<li>VGG</li>
+<li>ResNet</li>
+<li>GoogleNet</li>
+<li>InceptionV3</li>
+<li>MoblieNet</li>
+<li>IncepResNet</li>
+<li>EfficientNet</li>
+<li>DenseNet</li>
+<li>HRNet</li>
+<li>SuppressNet</li>
+<li>StatsNet</li>
+<li>DEL</li>
+</ul>
+<h2 id="RNN-循环神经网络"><a href="#RNN-循环神经网络" class="headerlink" title="RNN(循环神经网络)"></a>RNN(循环神经网络)</h2><ul>
+<li>LSTM</li>
+<li>FaceNet</li>
+<li>Bio Directional RNN</li>
+<li>RCNN(区域卷积神经网络)</li>
+<li>Faster RCNN</li>
+<li>Long-term RCNN</li>
+<li>HMN</li>
+<li>MTCNN(多任务级联CNN)</li>
+<li>MSCNN(多尺度时间CNN)</li>
+</ul>
+<h1 id="Machine-Learning-机器学习"><a href="#Machine-Learning-机器学习" class="headerlink" title="Machine Learning(机器学习)"></a>Machine Learning(机器学习)</h1><ul>
+<li>SVM(支持向量机)</li>
+<li>LR(逻辑回归)</li>
+<li>MLP(多层感知器神经网络)</li>
+<li>k-MN(k表示聚类)</li>
+<li>KNN(k-最近邻居)</li>
+<li>MIL</li>
+<li>DA(判别分析)</li>
+<li>NB(朴素贝叶斯)</li>
+<li>RF</li>
+<li>DT(决策树)</li>
+<li>BOOST<ul>
+<li>XGB</li>
+<li>AdaBoost</li>
+</ul>
+</li>
+</ul>
+<h1 id="Statistical"><a href="#Statistical" class="headerlink" title="Statistical"></a>Statistical</h1><ul>
+<li>EM(期望最大化)</li>
+<li>CRA(协同关系分析)</li>
+<li>EA</li>
+<li>PI</li>
+<li>WM</li>
+<li>KLD</li>
+<li>TVD</li>
+<li>JSD</li>
+</ul>
+<h1 id="BC区块链"><a href="#BC区块链" class="headerlink" title="BC区块链"></a>BC区块链</h1><p>ETH(以太坊区块链)</p>
+<h1 id="Feature"><a href="#Feature" class="headerlink" title="Feature"></a>Feature</h1><ul>
+<li>SA：特殊伪像，</li>
+<li>VA：视觉伪像，</li>
+<li>BA：生物伪影，</li>
+<li>FL：人脸标志，</li>
+<li>STC：时空一致性，</li>
+<li>TEX：纹理，</li>
+<li>FDA：频域分析，</li>
+<li>LS：潜在特征，</li>
+<li>GAN：基于生成对抗性网络的特征，</li>
+<li>MES：介观特征，</li>
+<li>IFC：帧内不一致，</li>
+<li>CPRNU：Constrastive and photo-responsed PRNU pattern，</li>
+<li>IMG：图像元数据，增强和隐写分析，其他：不在通用列表中的不同特征</li>
+</ul>
+<h1 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h1><ul>
+<li>FF:FaceForensics，</li>
+<li>DFD:Deepfake Detection，</li>
+<li>CELEB-A：Deepfake Forensics V1，</li>
+<li>CELEB-DF:DDeepFake-Forensics V2，</li>
+<li>DFDC:Depfake Detection Chalange，</li>
+<li>DF-TIMIT:Depfake-TIMIT，</li>
+<li>DF-1.0:DeperForensics-1.0，</li>
+<li>WDF:Wild Deepfake，</li>
+<li>SMFW:SwapMe和FaceSwap，</li>
+<li>DFS:Deep Fakes，</li>
+<li>FFD:野生中的假脸，</li>
+<li>FE:FakeET，</li>
+<li>FS:换脸器，</li>
+<li>DF:DepFake，</li>
+<li>SFD:换脸检测，</li>
+<li>UADFV:不一致的头部姿势，</li>
+<li>MANFA：篡改的脸，</li>
+<li>其他：作者的自定义数据集</li>
+</ul>
+<h1 id="Focus"><a href="#Focus" class="headerlink" title="Focus"></a>Focus</h1><p>DMF：数字媒体取证，FM：面部操纵</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+        <category>CV学习</category>
+      </categories>
+  </entry>
 </search>
