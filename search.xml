@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Hexo安装和配置next主题</title>
-    <url>/2024/03/21/%E5%AE%89%E8%A3%85Hexo%E5%92%8C%E9%85%8D%E7%BD%AEnext/</url>
+    <url>/learn_blog/2024/03/21/%E5%AE%89%E8%A3%85Hexo%E5%92%8C%E9%85%8D%E7%BD%AEnext/</url>
     <content><![CDATA[<h1 id="1-安装Hexo"><a href="#1-安装Hexo" class="headerlink" title="1.安装Hexo"></a>1.安装Hexo</h1><p>Hexo 依赖了 Node.js 和 Git，所以在安装 Hexo 之前必须确保安装了这两个工具.</p>
 <h2 id="1-2-安装Node-js"><a href="#1-2-安装Node-js" class="headerlink" title="1.2 安装Node.js"></a>1.2 安装Node.js</h2><p>下载：<a href="https://link.zhihu.com/?target=https://nodejs.org/en/download/">https://nodejs.org/en/download/</a></p>
 <p>安装完</p>
@@ -141,7 +141,7 @@
   </entry>
   <entry>
     <title>清点资源</title>
-    <url>/2024/03/21/%E6%B8%85%E7%82%B9%E8%B5%84%E6%BA%90/</url>
+    <url>/learn_blog/2024/03/21/%E6%B8%85%E7%82%B9%E8%B5%84%E6%BA%90/</url>
     <content><![CDATA[<h1 id="清点资源"><a href="#清点资源" class="headerlink" title="清点资源"></a>清点资源</h1><h2 id="人物情况"><a href="#人物情况" class="headerlink" title="人物情况"></a>人物情况</h2><h3 id="等级与经验"><a href="#等级与经验" class="headerlink" title="等级与经验"></a>等级与经验</h3><p>总经验25 E</p>
 <p>等级：144</p>
 <p>目前经验4000万</p>
