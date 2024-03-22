@@ -205,8 +205,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2024-03-22 12:02:51" itemprop="dateCreated datePublished" datetime="2024-03-22T12:02:51+08:00">2024-03-22</time>
+              <time title="创建时间：2024-03-22 12:02:51 / 修改时间：12:14:49" itemprop="dateCreated datePublished" datetime="2024-03-22T12:02:51+08:00">2024-03-22</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -249,7 +250,7 @@
       
           <h1 id="1-门派的分灵机制"><a href="#1-门派的分灵机制" class="headerlink" title="1. 门派的分灵机制"></a>1. 门派的分灵机制</h1><h2 id="1-1-作用目标影响分灵系数"><a href="#1-1-作用目标影响分灵系数" class="headerlink" title="1.1 作用目标影响分灵系数"></a>1.1 作用目标影响分灵系数</h2><ol>
 <li>当作用目标≤3时，分灵系数为$1-N\times0.1$，其中N为目标人数</li>
-<li>当作用目标&#x3D;4时，初始目标(3个)分灵系数为70%，额外目标分灵系数为60%</li>
+<li>当作用目标=4时，初始目标(3个)分灵系数为70%，额外目标分灵系数为60%</li>
 <li>当作用目标≥5时，初始目标(3个)分灵系数为70%，额外目标分灵系数为$0.7-N\times0.05$</li>
 <li>分灵系数最低为0.5，最高为1</li>
 </ol>
@@ -662,6 +663,61 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
