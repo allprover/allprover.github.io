@@ -1152,7 +1152,6 @@ pre .javascript .function {
 .sidebar {
   background: #222;
   bottom: 0;
-  box-shadow: inset 0 2px 6px #000;
   position: fixed;
   top: 0;
 }
@@ -1214,7 +1213,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #4a0dff;
+  background: #0effa4;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1529,33 +1528,26 @@ pre .javascript .function {
   transition-timing-function: ease-in-out;
 }
 .back-to-top {
-  background: #222;
-  bottom: -100px;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  left: 30px;
-  opacity: 0.6;
-  padding: 0 6px;
-  position: fixed;
-  transition-property: bottom;
-  z-index: 1300;
-  width: 24px;
-}
-.back-to-top span {
-  display: none;
-}
-.back-to-top:hover {
-  color: #fc6423;
+  background: transparent;
+  margin: 8px -10px -20px;
+  opacity: 0;
 }
 .back-to-top.back-to-top-on {
-  bottom: 30px;
+  cursor: pointer;
+  opacity: 0.6;
 }
-@media (max-width: 991px) {
-  .back-to-top {
-    left: 20px;
-    opacity: 0.8;
-  }
+.back-to-top.back-to-top-on:hover {
+  opacity: 0.8;
+}
+.reading-progress-bar {
+  background: #37c6c0;
+  display: block;
+  height: 3px;
+  left: 0;
+  position: fixed;
+  width: 0;
+  z-index: 1500;
+  top: 0;
 }
 .post-body {
   font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -2287,6 +2279,13 @@ ul.breadcrumb li + li:last-child {
   color: #ccc;
   margin: auto;
 }
+mjx-container[jax="CHTML"][display="true"],
+.has-jax {
+  overflow: auto hidden;
+}
+mjx-container + br {
+  display: none;
+}
 .header {
   margin: 0 auto;
   position: relative;
@@ -2586,6 +2585,13 @@ ul.breadcrumb li + li:last-child {
 .links-of-blogroll-item {
   padding: 0;
 }
+.back-to-top {
+  background: var(--body-bg-color);
+  margin: -4px -10px -18px;
+}
+.back-to-top.back-to-top-on {
+  margin-top: 16px;
+}
 .content-wrap {
   background: initial;
   box-shadow: initial;
@@ -2820,6 +2826,62 @@ div.post-block.tag .collection-title h2 {
   div.post-block.tag .collection-title h2 {
     font-size: 18px;
   }
+}
+.category-list-link:hover {
+  transform: scale(1.1);
+  box-shadow: 10px 10px 15px 2px rgba(0,0,0,0.12), 0 0 6px 0 rgba(104,104,105,0.1);
+  border-radius: 15px;
+  padding: 6px 16px;
+  margin-left: 0px;
+  font-size: 16px;
+  transition-duration: 0.15s;
+}
+a.category-list-link:before {
+  top: 10px;
+  width: 18px;
+  height: 18px;
+  content: "📚";
+  margin-right: 5px;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: 15px;
+  line-height: 18px;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+}
+::-webkit-scrollbar-button:start:increment,
+::-webkit-scrollbar-button:end:decrement {
+  display: none;
+}
+::-webkit-scrollbar-corner {
+  display: block;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: rgba(0,0,0,0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+  border-radius: 8px;
+  background-color: rgba(0,0,0,0.5);
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border-right: 1px solid transparent;
+  border-left: 1px solid transparent;
+}
+::-webkit-scrollbar-track:hover {
+  background-color: rgba(0,0,0,0.15);
+}
+::-webkit-scrollbar-button:start {
+  width: 10px;
+  height: 10px;
+/*background: url(../images/scrollbar_arrow.png) no-repeat 0 0;*/
+/*可以添加滚动条样式*/
 }
 body {
   background-image: url("/images/background.jpg");
