@@ -104,6 +104,11 @@
 <p>Running time:  00:00:01<br>Output generated:  23 3月 24 19:38:10<br>Copyright (c) 1999-2008 Analytic Technologies</p>
 <h2 id="2-8-凝聚子群分析"><a href="#2-8-凝聚子群分析" class="headerlink" title="2.8 凝聚子群分析"></a>2.8 凝聚子群分析</h2><p>network-&gt;roles&amp; positions -&gt;structural -&gt;concor</p>
 <p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/image-20240323193930316.png" alt="image-20240323193930316"></p>
+<h1 id="3-结论"><a href="#3-结论" class="headerlink" title="3 结论"></a>3 结论</h1><p>社交网络分析在灰度共生矩阵上的应用，反应了像素点之间的关联。从而可以得出图片中的痕迹是否明显。</p>
+<h1 id="4-与自己方向相结合"><a href="#4-与自己方向相结合" class="headerlink" title="4 与自己方向相结合"></a>4 与自己方向相结合</h1><p>我的研究方向是视频深度伪造检测</p>
+<p>本次提供的灰度共生数据，来源于以下图片</p>
+<p><img src="D:\SelfBlendedImages-master\data\FaceForensics++\original_sequences\youtube\raw\frames\000\000.png" alt="000"></p>
+<p>倘若，再加以处理，例如：将真的图片中的人脸提取出来，再进行灰度共生矩阵处理，对其进行中心性分析等一系列社交网络分析。然后将所得的分析数据输入神经网络模型中，并重复输入不同的人脸图像，让模型进行学习。再将假图片的分析数据给训练后的模型进行评估。</p>
 ]]></content>
       <categories>
         <category>计算机</category>
@@ -692,6 +697,57 @@
       <categories>
         <category>游戏</category>
         <category>梦幻西游</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>SelfBlendedImages论文精读</title>
+    <url>/learn_blog/2024/03/24/SelfBlendedImages%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/</url>
+    <content><![CDATA[<h1 id="1-论文解读"><a href="#1-论文解读" class="headerlink" title="1. 论文解读"></a>1. 论文解读</h1><h1 id="2-代码运行"><a href="#2-代码运行" class="headerlink" title="2. 代码运行"></a>2. 代码运行</h1><h2 id="2-1-环境"><a href="#2-1-环境" class="headerlink" title="2.1 环境"></a>2.1 环境</h2><p>下载 <code>requirements.txt</code></p>
+<p>并运行</p>
+<p><code>!pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple</code></p>
+<p><code>!pip install efficientnet-pytorch==0.7.1 -i https://pypi.tuna.tsinghua.edu.cn/simple</code></p>
+<p><code>!pip install retinaface-pytorch==0.0.7 -i https://pypi.tuna.tsinghua.edu.cn/simple</code></p>
+<p><code>!pip install dlib -i https://pypi.tuna.tsinghua.edu.cn/simple</code></p>
+<p><code>!pip install imutils -i https://pypi.tuna.tsinghua.edu.cn/simple</code></p>
+<p><code>!pip install  numpy==1.21.4 -i https://pypi.tuna.tsinghua.edu.cn/simple</code></p>
+<h2 id="2-2-数据集"><a href="#2-2-数据集" class="headerlink" title="2.2 数据集"></a>2.2 数据集</h2><p><strong>Celeb-DF-v2</strong>数据集</p>
+<p>将其存放在<code>./data/</code>文件夹中</p>
+<p>并且数据的文件树为以下结构</p>
+<figure class="highlight smali"><table><tr><td class="code"><pre><span class="line"><span class="keyword">.</span></span><br><span class="line">└── data</span><br><span class="line">    └── Celeb-DF-v2</span><br><span class="line">        ├── Celeb-real</span><br><span class="line">        │   └── videos</span><br><span class="line">        │       └── *.mp4</span><br><span class="line">        ├── Celeb-synthesis</span><br><span class="line">        │   └── videos</span><br><span class="line">        │       └── *.mp4</span><br><span class="line">        ├── Youtube-real</span><br><span class="line">        │   └── videos</span><br><span class="line">        │       └── *.mp4</span><br><span class="line">        └── List_of_testing_videos.txt</span><br></pre></td></tr></table></figure>
+<p><strong>FaceForensics++</strong>数据集</p>
+<p>将其存放在<code>./data/</code>文件夹中</p>
+<p>并且数据的文件树为以下结构</p>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── data</span><br><span class="line">    └── FaceForensics++</span><br><span class="line">        ├── <span class="keyword">original_sequences</span></span><br><span class="line"><span class="keyword"></span>        │   └── youtube</span><br><span class="line">        │       └── raw</span><br><span class="line">        │           └── videos</span><br><span class="line">        │               └── *.mp4</span><br><span class="line">        ├── train.<span class="keyword">json</span></span><br><span class="line"><span class="keyword"></span>        ├── val.<span class="keyword">json</span></span><br><span class="line"><span class="keyword"></span>        └── test.<span class="keyword">json</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-3-预训练模型"><a href="#2-3-预训练模型" class="headerlink" title="2.3 预训练模型"></a>2.3 预训练模型</h2><p>在作者的谷歌云盘中下载2个预训练模型：FF-raw and FF-c23.</p>
+<p>并将其存放在 <code>./weights/</code> 文件中</p>
+<h2 id="2-4-测试"><a href="#2-4-测试" class="headerlink" title="2.4 测试"></a>2.4 测试</h2><p><strong>测试Celeb-DF-v2数据集</strong></p>
+<figure class="highlight diff"><table><tr><td class="code"><pre><span class="line">CUDA_VISIBLE_DEVICES=* python3 src/inference/inference_dataset.py \</span><br><span class="line"><span class="deletion">-w weights/FFraw.tar \</span></span><br><span class="line"><span class="deletion">-d CDF</span></span><br></pre></td></tr></table></figure>
+<p><strong>测试视频</strong></p>
+<figure class="highlight livescript"><table><tr><td class="code"><pre><span class="line">CUDA_VISIBLE_DEVICES=* python3 src/inference/inference_video.py <span class="string">\</span></span><br><span class="line">-w weights/FFraw.tar <span class="string">\</span></span><br><span class="line">-i /path/<span class="keyword">to</span>/video.mp4</span><br></pre></td></tr></table></figure>
+<p><strong>测试图片</strong></p>
+<figure class="highlight livescript"><table><tr><td class="code"><pre><span class="line">CUDA_VISIBLE_DEVICES=* python3 src/inference/inference_image.py <span class="string">\</span></span><br><span class="line">-w weights/FFraw.tar <span class="string">\</span></span><br><span class="line">-i /path/<span class="keyword">to</span>/image.png</span><br></pre></td></tr></table></figure>
+<h2 id="2-5-训练模型"><a href="#2-5-训练模型" class="headerlink" title="2.5 训练模型"></a>2.5 训练模型</h2><ol>
+<li><p>下载<code>landmarks.dat</code></p>
+<p><a href="https://github.com/codeniko/shape_predictor_81_face_landmarks">here</a> 将文件存放在 <code>./src/preprocess/</code> 文件中</p>
+</li>
+<li><p>运行两个人脸提取的代码，两个都要运行,不然训练不了，<code>crop_dlib_ff.py</code>和<code>crop_retina_ff.py</code></p>
+</li>
+</ol>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">python3</span> src/preprocess/crop_dlib_ff.<span class="keyword">py</span> -d Original</span><br><span class="line">CUDA_VISIBLE_DEVICES=* <span class="keyword">python3</span> src/preprocess/crop_retina_ff.<span class="keyword">py</span> -d Original</span><br></pre></td></tr></table></figure>
+<ol>
+<li>特征点参数代码可以下载也可以不下载</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> src/utils/library</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/AlgoHunt/Face-Xray.git src/utils/library</span><br></pre></td></tr></table></figure>
+<ol>
+<li>运行训练代码</li>
+</ol>
+<figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line">CUDA_VISIBLE_DEVICES=* python3 src/train_sbi.py \</span><br><span class="line">src/configs/<span class="keyword">sbi</span>/base.json \</span><br><span class="line">-n <span class="keyword">sbi</span></span><br></pre></td></tr></table></figure>
+<p>运行完 5 个权重文件将会保存在 <code>./output/</code> 文件中</p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/image-20240324184108970.png" alt="image-20240324184108970"></p>
+<h1 id="3-代码解读"><a href="#3-代码解读" class="headerlink" title="3. 代码解读"></a>3. 代码解读</h1>]]></content>
+      <categories>
+        <category>计算机</category>
+        <category>CV学习</category>
       </categories>
   </entry>
 </search>
