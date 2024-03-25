@@ -107,7 +107,7 @@
 <h1 id="3-结论"><a href="#3-结论" class="headerlink" title="3 结论"></a>3 结论</h1><p>社交网络分析在灰度共生矩阵上的应用，反应了像素点之间的关联。从而可以得出图片中的痕迹是否明显。</p>
 <h1 id="4-与自己方向相结合"><a href="#4-与自己方向相结合" class="headerlink" title="4 与自己方向相结合"></a>4 与自己方向相结合</h1><p>我的研究方向是视频深度伪造检测</p>
 <p>本次提供的灰度共生数据，来源于以下图片</p>
-<p><img src="D:\SelfBlendedImages-master\data\FaceForensics++\original_sequences\youtube\raw\frames\000\000.png" alt="000"></p>
+<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20240325082027764.png" alt="image-20240325082027764"></p>
 <p>倘若，再加以处理，例如：将真的图片中的人脸提取出来，再进行灰度共生矩阵处理，对其进行中心性分析等一系列社交网络分析。然后将所得的分析数据输入神经网络模型中，并重复输入不同的人脸图像，让模型进行学习。再将假图片的分析数据给训练后的模型进行评估。</p>
 ]]></content>
       <categories>
@@ -714,10 +714,16 @@
 <p>将其存放在<code>./data/</code>文件夹中</p>
 <p>并且数据的文件树为以下结构</p>
 <figure class="highlight smali"><table><tr><td class="code"><pre><span class="line"><span class="keyword">.</span></span><br><span class="line">└── data</span><br><span class="line">    └── Celeb-DF-v2</span><br><span class="line">        ├── Celeb-real</span><br><span class="line">        │   └── videos</span><br><span class="line">        │       └── *.mp4</span><br><span class="line">        ├── Celeb-synthesis</span><br><span class="line">        │   └── videos</span><br><span class="line">        │       └── *.mp4</span><br><span class="line">        ├── Youtube-real</span><br><span class="line">        │   └── videos</span><br><span class="line">        │       └── *.mp4</span><br><span class="line">        └── List_of_testing_videos.txt</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里有个坑，下载过的celeb数据集，路径是没有videos的，你要自己创建。反正要严格按照上面的路径来</p>
+</blockquote>
 <p><strong>FaceForensics++</strong>数据集</p>
 <p>将其存放在<code>./data/</code>文件夹中</p>
 <p>并且数据的文件树为以下结构</p>
 <figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">└── data</span><br><span class="line">    └── FaceForensics++</span><br><span class="line">        ├── <span class="keyword">original_sequences</span></span><br><span class="line"><span class="keyword"></span>        │   └── youtube</span><br><span class="line">        │       └── raw</span><br><span class="line">        │           └── videos</span><br><span class="line">        │               └── *.mp4</span><br><span class="line">        ├── train.<span class="keyword">json</span></span><br><span class="line"><span class="keyword"></span>        ├── val.<span class="keyword">json</span></span><br><span class="line"><span class="keyword"></span>        └── test.<span class="keyword">json</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个数据集一个original都要100G这么大，每个月的VPN流量伤不起啊</p>
+</blockquote>
 <h2 id="2-3-预训练模型"><a href="#2-3-预训练模型" class="headerlink" title="2.3 预训练模型"></a>2.3 预训练模型</h2><p>在作者的谷歌云盘中下载2个预训练模型：FF-raw and FF-c23.</p>
 <p>并将其存放在 <code>./weights/</code> 文件中</p>
 <h2 id="2-4-测试"><a href="#2-4-测试" class="headerlink" title="2.4 测试"></a>2.4 测试</h2><p><strong>测试Celeb-DF-v2数据集</strong></p>
