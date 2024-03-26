@@ -756,4 +756,121 @@
         <category>CV学习</category>
       </categories>
   </entry>
+  <entry>
+    <title>LSTM长短期记忆</title>
+    <url>/learn_blog/2024/03/25/LSTM%E9%95%BF%E7%9F%AD%E6%9C%9F%E8%AE%B0%E5%BF%86/</url>
+    <content><![CDATA[<h1 id="LSTM的概念与RNN的区别"><a href="#LSTM的概念与RNN的区别" class="headerlink" title="LSTM的概念与RNN的区别"></a>LSTM的概念与RNN的区别</h1><p>LSTM（Long Short-Term Memory）是一种长短期记忆网络，是一种特殊的RNN（循环神经网络）。与传统的RNN相比，LSTM更加适用于处理和预测时间序列中间隔较长的重要事件。</p>
+<p>传统的RNN结构可以看做是多个重复的神经元构成的“回路”，每个神经元都接受输入信息并产生输出，然后将输出再次作为下一个神经元的输入，依次传递下去。这种结构能够在序列数据上学习短时依赖关系，但是由于梯度消失和梯度爆炸问题，RNN在处理长序列时难以达到很好的性能。</p>
+<p>而LSTM通过引入记忆细胞、输入门、输出门和遗忘门的概念，能够有效地解决长序列问题。</p>
+<p>记忆细胞负责保存重要信息，输入门决定要不要将当前输入信息写入记忆细胞，遗忘门决定要不要遗忘记忆细胞中的信息，输出门决定要不要将记忆细胞的信息作为当前的输出。</p>
+<p>这些门的控制能够有效地捕捉序列中重要的长时间依赖性，并且能够解决梯度问题。</p>
+<h1 id="LSTM结构和原理"><a href="#LSTM结构和原理" class="headerlink" title="LSTM结构和原理"></a>LSTM结构和原理</h1><p>LSTM结构包括了记忆细胞、输入门、输出门和遗忘门这四个部分。</p>
+<ul>
+<li>记忆细胞（memory cell）: 它是 LSTM 的核心，负责保存重要的信息，并将这些信息传递给后面的网络层。</li>
+<li>输入门（input gate）: 决定了当前输入信息是否写入记忆细胞，也就是说，能够控制输入信息对记忆细胞的影响。</li>
+<li>遗忘门（forget gate）: 决定了记忆细胞中的信息是否被遗忘，也就是说，能够控制记忆细胞中保存的信息会不会消失。</li>
+<li>输出门（output gate）: 决定了记忆细胞中的信息是否输出，也就是说，能够控制记忆细胞中保存的信息会不会对后面的网络层造成影响。</li>
+</ul>
+<p>这四个部分通过计算权重矩阵和输入信号的点积，并通过激活函数（通常是sigmoid函数）计算出每个门的输出值，再乘上记忆细胞的值来进行最终计算。</p>
+<p><strong>结构</strong></p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/20200330163256331.png" alt="在这里插入图片描述"></p>
+<p>LSTM模型是由 t 时刻的输入$X_t$，细胞状态$C_t$，临时细胞状态$\tilde{c}_t$，隐藏层状态$h_t$，遗忘门$f_t$，记忆门$i_t$，输出门$o_t$组成。</p>
+<p>LSTM的计算过程可以概括为，通过对细胞状态中信息遗忘和记忆新的信息使得对后续时刻计算有用的信息得以传递，而无用的信息被丢弃，并在每个时间步都会输出隐层状态$h_t$。</p>
+<p><strong>cell状态</strong></p>
+<p>cell状态有点像传送带，它只用一些次要的线性交互就能贯穿整个链式结构，这其实也就是信息记忆的地方，因此信息能很容易地以不变的形式从中流过。</p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/pIYBAFrr1fCAPfVOAABtsGAJp_U372.png" alt="img"></p>
+<p>为了增加/删除cell中的信息，LSTM中有一些控制门（gate）。它们决定了信息通过的方式，包含一个sigmoid神经网络层和一个pointwise点乘操作。</p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/pIYBAFrr1fGAe5PzAAAIs7gzYW4757.jpg" alt="img"></p>
+<p>sigmoid层输出0到1之间的数字，点乘操作决定多少信息可以传送过去，当为0时，不传送；当为1时，全部传送。</p>
+<p>像这样的控制门，LSTM共有3个，以此保护和控制cell状态。</p>
+<p><strong>遗忘门</strong></p>
+<p>对于输入$x<em>t$和$h</em>{t-1}$，遗忘门会输出一个值域为[0, 1]的数字，放进细胞状态$C_{t−1}$中。当为0时，全部删除；当为1时，全部保留。</p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/pIYBAFrr1fGATapCAACa8w-t1tA951.png" alt="img"></p>
+<p><strong>输入门</strong></p>
+<p>分为两步，首先，LSTM会用一个包含sigmoid层的输入门决定哪些信息该保留，其次，它会用一个$tanh$层为这些信息生成一个向量$\tilde{c}_t$，用来更新细胞状态。</p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/pIYBAFrr1fGAJko6AAC8z6KeefY047.png" alt="img"></p>
+<p><strong>输出门</strong></p>
+<p>有了遗忘门和输入门，现在我们就能把细胞状态$C<em>{t−1}$更新为$C</em>{t}$了。如下图所示，其中$f<em>t×C</em>{t−1}$表示希望删除的信息，$i_t×C_t$表示新增的信息。</p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/pIYBAFrr1fGAQ_DiAACnSY72yLs112.png" alt="img"></p>
+<h1 id="Bi-LSTM"><a href="#Bi-LSTM" class="headerlink" title="Bi-LSTM"></a>Bi-LSTM</h1><p>前向的LSTM与后向的LSTM结合成BiLSTM,将前向和后向的隐向量进行拼接.</p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/20200330164206271.png" alt="在这里插入图片描述"></p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/20200330164838930.png" alt="在这里插入图片描述"></p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+        <category>CV学习</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>OpenGL学习</title>
+    <url>/learn_blog/2024/03/26/OpenGL%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>计算机</category>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>图形学学习知识一览</title>
+    <url>/learn_blog/2024/03/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%9F%A5%E8%AF%86%E4%B8%80%E8%A7%88/</url>
+    <content><![CDATA[<h1 id="OpenGL"><a href="#OpenGL" class="headerlink" title="OpenGL"></a>OpenGL</h1><h2 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h2><p><a href="https://learnopengl-cn.github.io/">主页 - LearnOpenGL CN (learnopengl-cn.github.io)</a></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>OpenGL</strong>（英语：Open Graphics Library，译名：开放图形库或者“开放式图形库”）是用于渲染2D、3D矢量图形的跨语言、跨平台的应用程序编程接口（API）。这个接口由近350个不同的函数调用组成，用来绘制从简单的图形到比较复杂的三维景象。而另一种程序接口系统是仅用于Microsoft Windows上的Direct3D。OpenGL常用于CAD、虚拟现实、科学可视化程序和电子游戏开发。</p>
+<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><ul>
+<li><strong>建立3D模型：</strong>OpenGL除了能够处理一般的2D图形，即点、线、面的绘制外，主要任务是集合了3D立体的物体绘制函数。</li>
+<li><strong>图形变换：</strong>OpenGL利用基本变换以及投影变换处理图形。所谓的基本变换就是在处理2D平面图形时的平移、旋转、变比、镜像变换。投影变换就是在处理3D立体图形时的平行投影以及透视投影。通过变换方式，可以将2D的平面图形清晰明了的变换成3D的立体图形，从而在减少计算的时间的同时就能够提高了图形显示的速度。</li>
+<li><strong>颜色模式：</strong>OpenGL库中的颜色模型：使用较为广泛的RGBA模式以及颜色索引模式（color index）。</li>
+<li><strong>光照、材质的设置：</strong>OpenGL库中包含了多种光照的类型。材质是用光反射率来表示的。其原理是基于人眼的原理，场景中的物体是由光的红绿蓝的分量以及材质的红绿蓝的反射率的乘积后所形成的颜色值。</li>
+<li><strong>纹理映射：</strong>纹理指的是物体表面的花纹。OpenGL库中集合了对于物体纹理的映射处理方式，能够十分完整的复现物体表面的真实纹理。</li>
+<li><strong>图像增强功能和位图显示的扩展功能：</strong>OpenGL的功能包括像素的读写、复制外，以及一些特殊的图像处理功能：比如，融合、反走样、雾的等等特殊的处理方式。对于图像的重现和处理，可以使得效果更有真实感，逼真。</li>
+<li><strong>双缓存功能：</strong>OpenGL创新性的运用了双缓存形式。计算场景、生成画面图像、显示画面图像分别将其由前台缓存和后台缓存分开处理，大大提高了计算机的运算能力以及画面的显示速度。 [2]</li>
+</ul>
+<h1 id="OpenCV"><a href="#OpenCV" class="headerlink" title="OpenCV"></a>OpenCV</h1><p>OpenCV是一个基于Apache2.0许可（开源）发行的跨平台计算机视觉和机器学习软件库，可以运行在Linux、Windows、Android和Mac OS操作系统上。 [1]它轻量级而且高效——由一系列 C 函数和少量 C++ 类构成，同时提供了Python、Ruby、MATLAB等语言的接口，实现了图像处理和计算机视觉方面的很多通用算法。<br>OpenCV用C++语言编写，它具有C ++，Python，Java和MATLAB接口，并支持Windows，Linux，Android和Mac OS，OpenCV主要倾向于实时视觉应用，并在可用时利用MMX和SSE指令， 如今也提供对于C#、Ch、Ruby，GO的支持。</p>
+<h1 id="Vulkan"><a href="#Vulkan" class="headerlink" title="Vulkan"></a>Vulkan</h1><p>ulkan是一个跨平台的2D和3D绘图应用程序接口（API），最早由科纳斯组织（Khronos Group） [1]在2015年游戏开发者大会（GDC）上发表。<br>科纳斯最先把VulkanAPI称为“下一代OpenGL行动”（next generation OpenGL initiative）或“glNext”， [2]但在正式宣布Vulkan之后这些名字就没有再使用了。就像OpenGL，Vulkan针对实时3D程序（如电子游戏）设计，Vulkan并计划提供高性能和低CPU管理负担（overhead），这也是Direct3D12和AMD的Mantle的目标。Vulkan兼容Mantle的一个分支，并使用了Mantle的一些组件。<br>Vulkan旨在提供更低的CPU开销与更直接的GPU控制，其理念大致与Direct3D 12和Mantle类似。</p>
+<h1 id="Game101"><a href="#Game101" class="headerlink" title="Game101"></a>Game101</h1><h2 id="视频"><a href="#视频" class="headerlink" title="视频"></a>视频</h2><p><a href="https://www.bilibili.com/video/BV1X7411F744/?t=1749&amp;vd_source=04946b2b94db8891e29af8d8d8614fc2">GAMES101-现代计算机图形学入门-闫令琪_哔哩哔哩_bilibili</a></p>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="1-全局关照技术"><a href="#1-全局关照技术" class="headerlink" title="1. 全局关照技术"></a>1. 全局关照技术</h3><p>全局光照（Global Illumination,简称 GI）， 作为图形学中比较酷的概念之一，是指既考虑场景中来自光源的直接光照，又考虑经过场景中其他物体反射后的间接光照的一种渲染技术。</p>
+<p>即可以理解为：全局光照 = 直接光照(Direct Light) + 间接光照(Indirect Light) </p>
+<h3 id="2-卡通渲染"><a href="#2-卡通渲染" class="headerlink" title="2. 卡通渲染"></a>2. 卡通渲染</h3><p>美式卡通风格在色彩上比较连续，有渐变色，着色风格很大程度上依赖于艺术家定义的色调（tone），而在阴影和高光方面常常采取夸张和变形的做法 。</p>
+<p>日式卡通风格往往角色造型更写实，但在着色方面，则趋向于大片大片纯色色块，并有的明暗交界 </p>
+<h3 id="3-特效"><a href="#3-特效" class="headerlink" title="3. 特效"></a>3. 特效</h3><p>最简单的图形学应用——平常不常见的画面，穿帮被发现概率小 </p>
+<h3 id="4-面部动作捕捉"><a href="#4-面部动作捕捉" class="headerlink" title="4. 面部动作捕捉"></a>4. 面部动作捕捉</h3><p>它是动作捕捉（Motion Capture）技术的一部分，指使用机械装置、相机等设备记录人类面部表情和动作，将之转换为一系列参数数据的过程。</p>
+<p>与捕捉由关节点构成、较为稳定的人体动作相比，面部表情更为细微复杂，因此对数据精度要求更高。</p>
+<p>CG 电影、大型游戏在预算允许的情况下，倾向于选择捕捉真人面部来完成角色的演出。与人为制作的动画角色表情相比，通过捕捉真人面部动作生成的角色会更具真实感。 </p>
+<h3 id="5-毛发模型和渲染"><a href="#5-毛发模型和渲染" class="headerlink" title="5. 毛发模型和渲染"></a>5. 毛发模型和渲染</h3><p>毛发渲染一直是实时图形学的难题，因为其光照复杂，数量众多，物理效果不好抽象等。在早期，只能通过若干面片代替，后来随着硬件及渲染技术的提升，慢慢发展出了经验模型的Kajiya-Kay和基于物理的Marschner毛发渲染模型。 </p>
+<h3 id="6-模拟动画-仿真"><a href="#6-模拟动画-仿真" class="headerlink" title="6.模拟动画/仿真"></a>6.模拟动画/仿真</h3><p>今天的游戏动画应用了多种物理模拟技术，例如运动学模拟(kinematics simulation),刚体动力学模拟(rigid body dynamics simulation),绳子/布料模拟(string/cloth simulation),柔体动力学模拟(soft body dynamics simulation),流体动力学模拟(fluid dynamics simulation)等等。另外碰撞侦测(collision detection)是许多模拟系统里所需的。</p>
+<h3 id="7-计算机辅助设计-CAD"><a href="#7-计算机辅助设计-CAD" class="headerlink" title="7.计算机辅助设计(CAD)"></a>7.计算机辅助设计(CAD)</h3><p>CAD是利用计算机快速的数值计算和强大的图文处理功能，辅助工程技术人员进行产品设计、工程绘图和数据管理的一门计算机应用技术，是计算机科学技术发展和应用中的一门重要技术。</p>
+<p>CAD的涵盖范围很广，其设计对象最初包括两大类，一类是机械、电子、汽车、航天、农业、轻工和纺织产品等；另一类是工程设计产品等，如工程建筑。如今，CAD技术的应用范围已经延伸到诸如艺术等各行各业，如电影、动画、广告、娱乐和多媒体仿真等都属于CAD范畴。</p>
+<h3 id="8-可视化"><a href="#8-可视化" class="headerlink" title="8. 可视化"></a>8. 可视化</h3><p>视化是利用计算机图形学和图像处理技术，将数据转换成图形或图像在屏幕上显示出来，并进行交互处理的理论、方法和技术。它涉及到计算机图形学、图像处理、计算机视觉、计算机辅助设计等多个领域，成为研究数据表示、数据处理、决策分析等一系列问题的综合技术。目前正在飞速发展的虚拟现实技术也是以图形图像的可视化技术为依托的。</p>
+<p>可视化技术最早运用于计算机科学中，并形成了可视化技术的一个重要分支——科学计算可视化(Visualization in Scientific Computing)。科学计算可视化能够把科学数据，包括测量获得的数值、图像或是计算中涉及、产生的数字信息变为直观的、以图形图像信息表示的、随时间和空间变化的物理现象或物理量呈现在研究者面前，使他们能够观察、模拟和计算。</p>
+<h3 id="9-VR-AR-MR"><a href="#9-VR-AR-MR" class="headerlink" title="9. VR.AR.MR"></a>9. VR.AR.MR</h3><p>虚拟现实（Virtual Reality）</p>
+<p>所谓虚拟现实，顾名思义，就是虚拟和现实相互结合。从理论上来讲，虚拟现实技术（VR）是一种可以创建和体验虚拟世界的计算机仿真系统，它利用计算机生成一种模拟环境，使用户沉浸到该环境中。虚拟现实技术就是利用现实生活中的数据，通过计算机技术产生的电子信号，将其与各种输出设备结合使其转化为能够让人们感受到的现象，这些现象可以是现实中真真切切的物体，也可以是我们肉眼所看不到的物质，通过三维模型表现出来。因为这些现象不是我们直接所能看到的，而是通过计算机技术模拟出来的现实中的世界，故称为虚拟现实。</p>
+<p>增强现实（Augmented Reality）</p>
+<p>增强现实技术也被称为扩增现实，AR增强现实技术是促使真实世界信息和虚拟世界信息内容之间综合在一起的较新的技术内容，其将原本在现实世界的空间范围中比较难以进行体验的实体信息在电脑等科学技术的基础上，实施模拟仿真处理，叠加将虚拟信息内容在真实世界中加以有效应用，并且在这一过程中能够被人类感官所感知，从而实现超越现实的感官体验。真实环境和虚拟物体之间重叠之后，能够在同一个画面以及空间中同时存在。</p>
+<p>混合现实（Mixed Reality）</p>
+<p>混合现实技术（MR）是虚拟现实技术的进一步发展，该技术通过在虚拟环境中引入现实场景信息，在虚拟世界、现实世界和用户之间搭起一个交互反馈的信息回路，以增强用户体验的真实感。</p>
+<p>混合现实是一组技术组合，不仅提供新的观看方法，还提供新的输入方法，而且所有方法相互结合，从而推动创新 。输入和输出的结合对中小型企业而言是关键的差异化优势。这样，混合现实就可以直接影响工作流程，帮助员工提高工作效率和创新能力。</p>
+<h3 id="10-图形用户界面"><a href="#10-图形用户界面" class="headerlink" title="10. 图形用户界面"></a>10. 图形用户界面</h3><p>图形用户界面（Graphical User Interface，简称 GUI，又称图形用户接口）是指采用图形方式显示的计算机操作用户界面。</p>
+<p>图形用户界面是一种人与计算机通信的界面显示格式，允许用户使用鼠标等输入设备操纵屏幕上的图标或菜单选项，以选择命令、调用文件、启动程序或执行其它一些日常任务。与通过键盘输入文本或字符命令来完成例行任务的字符界面相比，图形用户界面有许多优点。图形用户界面由窗口、下拉菜单、对话框及其相应的控制机制构成，在各种新式应用程序中都是标准化的，即相同的操作总是以同样的方式来完成，在图形用户界面，用户看到和操作的都是图形对象，应用的是计算机图形学的技术 </p>
+<h3 id="11-字体排印学"><a href="#11-字体排印学" class="headerlink" title="11. 字体排印学"></a>11. 字体排印学</h3><p>一种涉及对字体、字号、缩进、行间距、字符间距进行设计、安排等方法来进行排版的一种工艺。在数码技术普及之前，字体排印是一项专业的工作，数码时代的来临使字体排印不像从前仅由排字印刷方面的技术工人完成，而更被图形艺术家、艺术指导、文书人员甚至儿童广泛使用。 </p>
+<h1 id="Direct3D-D3D"><a href="#Direct3D-D3D" class="headerlink" title="Direct3D(D3D)"></a>Direct3D(D3D)</h1><p>Direct 3D是基于微软的通用对象模式COM（Common Object Mode）的3D图形API。它是由微软（Microsoft）一手树立的3D API规范，微软公司拥有该库版权，它所有的语法定义包含在微软提供的程序开发组件的帮助文件、源代码中。Direct3D是微软公司DirectX SDK集成开发包中的重要部分，适合多媒体、娱乐、即时3D动画等广泛和实用的3D图形计算。自1996年发布以来，Direct3D以其良好的硬件兼容性和友好的编程方式很快得到了广泛的认可，现在几乎所有的具有3D图形加速的主流显示卡都对Direct3D提供良好的支持。但它也有缺陷，由于是以COM接口形式提供的，所以较为复杂，稳定性差，另外，目前只在Windows平台上可用。</p>
+<h1 id="metal"><a href="#metal" class="headerlink" title="metal"></a>metal</h1><p>在 WWDC 2014 上，Apple为游戏开发者推出了新的平台技术 Metal，该技术能够为 3D 图像提高 10 倍的渲染性能，并支持大家熟悉的游戏引擎及公司。<br>Metal 是一种低层次的渲染应用程序编程接口，提供了软件所需的最低层，保证软件可以运行在不同的图形芯片上。Metal 提升了 A7 与 A8 处理器效能，让其性能完全发挥。</p>
+<h1 id="cuda"><a href="#cuda" class="headerlink" title="cuda"></a>cuda</h1><p>CUDA（Compute Unified Device Architecture），是显卡厂商NVIDIA推出的运算平台。 CUDA™是一种由NVIDIA推出的通用并行计算架构，该架构使GPU能够解决复杂的计算问题。 它包含了CUDA指令集架构（ISA）以及GPU内部的并行计算引擎。 开发人员可以使用C语言来为CUDA™架构编写程序，所编写出的程序可以在支持CUDA™的处理器上以超高性能运行。CUDA3.0已经开始支持C++和FORTRAN。</p>
+<h1 id="unity"><a href="#unity" class="headerlink" title="unity"></a>unity</h1><p>Unity [1]是实时3D互动内容创作和运营平台 [2]。包括游戏开发、美术、建筑、汽车设计、影视在内的所有创作者，借助Unity将创意变成现实。 [3]Unity平台提供一整套完善的软件解决方案 [3]，可用于创作、运营和变现任何实时互动的2D和3D内容，支持平台包括手机、平板电脑、PC、游戏主机、增强现实和虚拟现实设备。 [3]<br>基于Unity开发的游戏和体验月均下载量高达30亿次 [4]，并且其在2019年的安装量已超过370亿次 [4] 。全平台（包括PC/主机/移动设备）所有游戏中有超过一半都是使用Unity创作的；在Apple应用商店和Google Play上排名最靠前的1000款游戏中，53%都是用Unity创作的。 [5]Unity提供易用实时平台，开发者可以在平台上构建各种AR和VR互动体验。</p>
+<h1 id="Unreal"><a href="#Unreal" class="headerlink" title="Unreal"></a>Unreal</h1><p>Unreal是UNREAL ENGINE（虚幻引擎）的简写，由Epic开发，是世界知名授权最广的游戏引擎之一。<br>虚幻技术研究中心在上海成立，该中心由GA国际游戏教育与虚幻引擎开发商EPIC的中国子公司EPIC GAMES CHINA联合设立。</p>
+<h1 id="CAD"><a href="#CAD" class="headerlink" title="CAD"></a>CAD</h1><p>利用计算机及其图形设备帮助设计人员进行设计工作。简称CAD。 在工程和产品设计中，计算机可以帮助设计人员担负计算、信息存储和制图等项工作。在设计中通常要用计算机对不同方案进行大量的计算、分析和比较，以决定最优方案；各种设计信息，不论是数字的、文字的或图形的，都能存放在计算机的内存或外存里，并能快速地检索；设计人员通常用草图开始设计，将草图变为工作图的繁重工作可以交给计算机完成；利用计算机可以进行与图形的编辑、放大、缩小、平移和旋转等有关的图形数据加工工作。</p>
+<h1 id="CAE"><a href="#CAE" class="headerlink" title="CAE"></a>CAE</h1><p>CAE(Computer Aided Engineering)指工程设计中的计算机辅助工程，指用计算机辅助求解分析复杂工程和产品的结构力学性能，以及优化结构性能等，把工程（生产）的各个环节有机地组织起来，其关键就是将有关的信息集成，使其产生并存在于工程（产品）的整个生命周期。而CAE软件可作静态结构分析，动态分析；研究线性、非线性问题；分析结构（固体）、流体、电磁等。</p>
+<h1 id="CAM"><a href="#CAM" class="headerlink" title="CAM"></a>CAM</h1><p>计算机辅助制造是指在机械制造业中，利用电子数字计算机通过各种数值控制机床和设备，自动完成离散产品的加工、装配 、检测和包装等制造过程。简称cam。</p>
+<h1 id="Eda"><a href="#Eda" class="headerlink" title="Eda"></a>Eda</h1><p><strong>电子设计自动化</strong>（英语：<strong>Electronic design automation</strong>，缩写：<strong>EDA</strong>）是指利用计算机辅助设计（CAD）软件，来完成超大规模集成电路（VLSI）芯片的功能设计、综合、验证、物理设计（包括布局、布线、版图、设计规则检查等）等流程的设计方式。</p>
+<h1 id="微分几何"><a href="#微分几何" class="headerlink" title="微分几何"></a>微分几何</h1><p>微分几何是运用微积分的理论研究空间的几何性质的数学分支学科。<br>古典微分几何研究三维空间中的曲线和曲面，而现代微分几何开始研究更一般的空间——流形。<br>微分几何与拓扑学等其他数学分支有紧密的联系，对物理学的发展也有重要影响。爱因斯坦的广义相对论就以微分几何中的黎曼几何作为其重要的数学基础。</p>
+<h1 id="计算几何"><a href="#计算几何" class="headerlink" title="计算几何"></a>计算几何</h1><h3 id="几何化"><a href="#几何化" class="headerlink" title="几何化"></a>几何化</h3><p>计算几何研究的对象是几个图形。早期人们对于图像的研究一般都是先建立坐标系，把图形转换成函数，然后用插值和逼近的数学方法，特别是用样条函数作为工具来分析图形，取得了可喜的成功。然而，这些方法过多地依赖于坐标系的选取，缺乏几何不变性，特别是用来解决某些大挠度曲线及曲线的奇异点等问题时，有一定的局限性。</p>
+<p>几何图形是实际物体的抽象描述，几何化是指被研究对象本身的性质所决定的一种必然趋势。</p>
+<h3 id="代数化"><a href="#代数化" class="headerlink" title="代数化"></a>代数化</h3><p>在国外，计算几何的代数化有一股很强的势头。为了在计算机和图形显示终端表示和处理各种复杂的曲面和几何形体，需进行大量的计算，往往需要将问题代数化、线性化、离散化，特别对于最新式的全色连续色调的图像，必须对显示屏上的光栅网格点逐点进行计算扫描。</p>
+<h3 id="图形化"><a href="#图形化" class="headerlink" title="图形化"></a>图形化</h3><p>随着交互式图形显示系统在CAGD中的广泛应用，计算机图形学作为新兴学科得到迅速发展。其主要研究对象是图形的生成、变换、显示、剪取、隐藏线和隐藏面的消除、阴影色调及相应的光顺处理等。其中剪取问题是计算机图形学的一个基本问题，剪取的关键是速度，尤其是在交互式动态显示和最新式的光扫描中。</p>
+<h1 id="GDI"><a href="#GDI" class="headerlink" title="GDI"></a>GDI</h1><p>图形设备接口（GDI ：Graphics Device Interface），它的主要任务是负责系统与绘图程序之间的信息交换，处理所有Windows程序的图形输出。</p>
+<h1 id="glsl"><a href="#glsl" class="headerlink" title="glsl"></a>glsl</h1><p>OpenGL着色语言（OpenGL Shading Language）是用来在OpenGL中着色编程的语言，也即开发人员写的短小的自定义程序，他们是在图形卡的GPU （Graphic Processor Unit图形处理单元）上执行的，代替了固定的渲染管线的一部分，使渲染管线中不同层次具有可编程性。比如：视图转换、投影转换等。GLSL（GL Shading Language）的着色器代码分成2个部分：Vertex Shader（顶点着色器）和Fragment（片断着色器），有时还会有Geometry Shader（几何着色器）。负责运行顶点着色的是顶点着色器。它可以得到当前OpenGL 中的状态，GLSL内置变量进行传递。GLSL其使用C语言作为基础高阶着色语言，避免了使用汇编语言或硬件规格语言的复杂性。</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+        <category>图形学</category>
+      </categories>
+  </entry>
 </search>
