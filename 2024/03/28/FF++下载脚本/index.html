@@ -20,28 +20,19 @@
     var CONFIG = {"hostname":"qinyueren.gitee.io","root":"/learn_blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="LSTM的概念与RNN的区别LSTM（Long Short-Term Memory）是一种长短期记忆网络，是一种特殊的RNN（循环神经网络）。与传统的RNN相比，LSTM更加适用于处理和预测时间序列中间隔较长的重要事件。 传统的RNN结构可以看做是多个重复的神经元构成的“回路”，每个神经元都接受输入信息并产生输出，然后将输出再次作为下一个神经元的输入，依次传递下去。这种结构能够在序列数据上学习短时">
+  <meta name="description" content="数据集结构12345678910111213141516171819202122232425262728FaceForensics++ dataset|-- downloaded_videos#包含所有原始下载的视频、视频信息文件及其提取的序列,可用于提取数据集中使用的原始序列      |-- original_sequences    |-- youtube    # c0&#x2F;raw 原始序列">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LSTM长短期记忆">
-<meta property="og:url" content="http://qinyueren.gitee.io/2024/03/25/LSTM%E9%95%BF%E7%9F%AD%E6%9C%9F%E8%AE%B0%E5%BF%86/index.html">
+<meta property="og:title" content="FF++下载脚本">
+<meta property="og:url" content="http://qinyueren.gitee.io/2024/03/28/FF++%E4%B8%8B%E8%BD%BD%E8%84%9A%E6%9C%AC/index.html">
 <meta property="og:site_name" content="秦越人的博客">
-<meta property="og:description" content="LSTM的概念与RNN的区别LSTM（Long Short-Term Memory）是一种长短期记忆网络，是一种特殊的RNN（循环神经网络）。与传统的RNN相比，LSTM更加适用于处理和预测时间序列中间隔较长的重要事件。 传统的RNN结构可以看做是多个重复的神经元构成的“回路”，每个神经元都接受输入信息并产生输出，然后将输出再次作为下一个神经元的输入，依次传递下去。这种结构能够在序列数据上学习短时">
+<meta property="og:description" content="数据集结构12345678910111213141516171819202122232425262728FaceForensics++ dataset|-- downloaded_videos#包含所有原始下载的视频、视频信息文件及其提取的序列,可用于提取数据集中使用的原始序列      |-- original_sequences    |-- youtube    # c0&#x2F;raw 原始序列">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/20200330163256331.png">
-<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/pIYBAFrr1fCAPfVOAABtsGAJp_U372.png">
-<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/pIYBAFrr1fGAe5PzAAAIs7gzYW4757.jpg">
-<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/pIYBAFrr1fGATapCAACa8w-t1tA951.png">
-<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/pIYBAFrr1fGAJko6AAC8z6KeefY047.png">
-<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/pIYBAFrr1fGAQ_DiAACnSY72yLs112.png">
-<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/20200330164206271.png">
-<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/20200330164838930.png">
-<meta property="article:published_time" content="2024-03-25T07:46:41.502Z">
-<meta property="article:modified_time" content="2024-03-25T11:53:21.707Z">
+<meta property="article:published_time" content="2024-03-28T07:35:55.602Z">
+<meta property="article:modified_time" content="2024-03-28T07:53:28.972Z">
 <meta property="article:author" content="Qinyueren">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/20200330163256331.png">
 
-<link rel="canonical" href="http://qinyueren.gitee.io/2024/03/25/LSTM%E9%95%BF%E7%9F%AD%E6%9C%9F%E8%AE%B0%E5%BF%86/">
+<link rel="canonical" href="http://qinyueren.gitee.io/2024/03/28/FF++%E4%B8%8B%E8%BD%BD%E8%84%9A%E6%9C%AC/">
 
 
 <script id="page-configurations">
@@ -54,7 +45,7 @@
   };
 </script>
 
-  <title>LSTM长短期记忆 | 秦越人的博客</title>
+  <title>FF++下载脚本 | 秦越人的博客</title>
   
 
 
@@ -194,7 +185,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://qinyueren.gitee.io/2024/03/25/LSTM%E9%95%BF%E7%9F%AD%E6%9C%9F%E8%AE%B0%E5%BF%86/">
+    <link itemprop="mainEntityOfPage" href="http://qinyueren.gitee.io/2024/03/28/FF++%E4%B8%8B%E8%BD%BD%E8%84%9A%E6%9C%AC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/learn_blog/images/avatar.gif">
@@ -207,7 +198,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          LSTM长短期记忆
+          FF++下载脚本
         </h1>
 
         <div class="post-meta">
@@ -218,7 +209,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-03-25 15:46:41 / 修改时间：19:53:21" itemprop="dateCreated datePublished" datetime="2024-03-25T15:46:41+08:00">2024-03-25</time>
+              <time title="创建时间：2024-03-28 15:35:55 / 修改时间：15:53:28" itemprop="dateCreated datePublished" datetime="2024-03-28T15:35:55+08:00">2024-03-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -240,14 +231,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
+              <span>337</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -259,42 +250,45 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="LSTM的概念与RNN的区别"><a href="#LSTM的概念与RNN的区别" class="headerlink" title="LSTM的概念与RNN的区别"></a>LSTM的概念与RNN的区别</h1><p>LSTM（Long Short-Term Memory）是一种长短期记忆网络，是一种特殊的RNN（循环神经网络）。与传统的RNN相比，LSTM更加适用于处理和预测时间序列中间隔较长的重要事件。</p>
-<p>传统的RNN结构可以看做是多个重复的神经元构成的“回路”，每个神经元都接受输入信息并产生输出，然后将输出再次作为下一个神经元的输入，依次传递下去。这种结构能够在序列数据上学习短时依赖关系，但是由于梯度消失和梯度爆炸问题，RNN在处理长序列时难以达到很好的性能。</p>
-<p>而LSTM通过引入记忆细胞、输入门、输出门和遗忘门的概念，能够有效地解决长序列问题。</p>
-<p>记忆细胞负责保存重要信息，输入门决定要不要将当前输入信息写入记忆细胞，遗忘门决定要不要遗忘记忆细胞中的信息，输出门决定要不要将记忆细胞的信息作为当前的输出。</p>
-<p>这些门的控制能够有效地捕捉序列中重要的长时间依赖性，并且能够解决梯度问题。</p>
-<h1 id="LSTM结构和原理"><a href="#LSTM结构和原理" class="headerlink" title="LSTM结构和原理"></a>LSTM结构和原理</h1><p>LSTM结构包括了记忆细胞、输入门、输出门和遗忘门这四个部分。</p>
-<ul>
-<li>记忆细胞（memory cell）: 它是 LSTM 的核心，负责保存重要的信息，并将这些信息传递给后面的网络层。</li>
-<li>输入门（input gate）: 决定了当前输入信息是否写入记忆细胞，也就是说，能够控制输入信息对记忆细胞的影响。</li>
-<li>遗忘门（forget gate）: 决定了记忆细胞中的信息是否被遗忘，也就是说，能够控制记忆细胞中保存的信息会不会消失。</li>
-<li>输出门（output gate）: 决定了记忆细胞中的信息是否输出，也就是说，能够控制记忆细胞中保存的信息会不会对后面的网络层造成影响。</li>
+        <h1 id="数据集结构"><a href="#数据集结构" class="headerlink" title="数据集结构"></a>数据集结构</h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">FaceForensics++ dataset</span><br><span class="line"><span class="string">|-- downloaded_videos</span></span><br><span class="line"><span class="meta">#包含所有原始下载的视频、视频信息文件及其提取的序列,可用于提取数据集中使用的原始序列</span></span><br><span class="line">      </span><br><span class="line"><span class="string">|-- original_sequences</span></span><br><span class="line">    <span class="string">|-- youtube</span></span><br><span class="line">    <span class="meta"># c0/raw 原始序列 图像或者视频 的 FaceForensics++ 数据集</span></span><br><span class="line">    <span class="meta"># c23/hq 原始序列 图像或者视频</span></span><br><span class="line">    <span class="meta"># c40/lq 原始序列 图像或者视频</span></span><br><span class="line">    </span><br><span class="line">    <span class="string">|-- actors</span></span><br><span class="line">    <span class="meta"># 来自 DeepFakeDetection 的图像或者视频</span></span><br><span class="line">       </span><br><span class="line"><span class="string">|-- manipulated_sequences</span></span><br><span class="line">    <span class="string">|-- Deepfakes</span></span><br><span class="line">    <span class="meta"># 所有三个压缩度的图像/视频以及泊松图像编辑后的模型和遮罩</span></span><br><span class="line">       </span><br><span class="line">    <span class="string">|-- DeepFakeDetection</span></span><br><span class="line">    <span class="meta"># 所有三个压缩度的图像/视频以及泊松图像编辑后的模型和遮罩 </span></span><br><span class="line">        </span><br><span class="line">    <span class="string">|-- Face2Face</span></span><br><span class="line">    <span class="meta"># 所有三个压缩度的图像/视频以及泊松图像编辑后的模型和遮罩</span></span><br><span class="line">    </span><br><span class="line">    <span class="string">|-- FaceSwap</span></span><br><span class="line">    <span class="meta"># 所有三个压缩度的图像/视频以及泊松图像编辑后的模型和遮罩</span></span><br><span class="line">    </span><br><span class="line">    <span class="string">|-- NeuralTextures</span></span><br><span class="line">    <span class="meta"># 所有三个压缩度的图像/视频以及泊松图像编辑后的模型和遮罩   </span></span><br></pre></td></tr></table></figure>
+<h1 id="文件大小"><a href="#文件大小" class="headerlink" title="文件大小"></a>文件大小</h1><ul>
+<li>FaceForensics++<ul>
+<li>视频<ul>
+<li>YouTube <ul>
+<li>原始视频：38.5GB</li>
+<li>h264压缩<ul>
+<li>raw/0: ~500GB</li>
+<li>23: ~10GB</li>
+<li>40: ~2GB</li>
 </ul>
-<p>这四个部分通过计算权重矩阵和输入信号的点积，并通过激活函数（通常是sigmoid函数）计算出每个门的输出值，再乘上记忆细胞的值来进行最终计算。</p>
-<p><strong>结构</strong></p>
-<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/20200330163256331.png" alt="在这里插入图片描述"></p>
-<p>LSTM模型是由 t 时刻的输入$X_t$，细胞状态$C_t$，临时细胞状态$\tilde{c}_t$，隐藏层状态$h_t$，遗忘门$f_t$，记忆门$i_t$，输出门$o_t$组成。</p>
-<p>LSTM的计算过程可以概括为，通过对细胞状态中信息遗忘和记忆新的信息使得对后续时刻计算有用的信息得以传递，而无用的信息被丢弃，并在每个时间步都会输出隐层状态$h_t$。</p>
-<p><strong>cell状态</strong></p>
-<p>cell状态有点像传送带，它只用一些次要的线性交互就能贯穿整个链式结构，这其实也就是信息记忆的地方，因此信息能很容易地以不变的形式从中流过。</p>
-<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/pIYBAFrr1fCAPfVOAABtsGAJp_U372.png" alt="img"></p>
-<p>为了增加/删除cell中的信息，LSTM中有一些控制门（gate）。它们决定了信息通过的方式，包含一个sigmoid神经网络层和一个pointwise点乘操作。</p>
-<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/pIYBAFrr1fGAe5PzAAAIs7gzYW4757.jpg" alt="img"></p>
-<p>sigmoid层输出0到1之间的数字，点乘操作决定多少信息可以传送过去，当为0时，不传送；当为1时，全部传送。</p>
-<p>像这样的控制门，LSTM共有3个，以此保护和控制cell状态。</p>
-<p><strong>遗忘门</strong></p>
-<p>对于输入$x<em>t$和$h</em>{t-1}$，遗忘门会输出一个值域为[0, 1]的数字，放进细胞状态$C_{t−1}$中。当为0时，全部删除；当为1时，全部保留。</p>
-<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/pIYBAFrr1fGATapCAACa8w-t1tA951.png" alt="img"></p>
-<p><strong>输入门</strong></p>
-<p>分为两步，首先，LSTM会用一个包含sigmoid层的输入门决定哪些信息该保留，其次，它会用一个$tanh$层为这些信息生成一个向量$\tilde{c}_t$，用来更新细胞状态。</p>
-<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/pIYBAFrr1fGAJko6AAC8z6KeefY047.png" alt="img"></p>
-<p><strong>输出门</strong></p>
-<p>有了遗忘门和输入门，现在我们就能把细胞状态$C<em>{t−1}$更新为$C</em>{t}$了。如下图所示，其中$f<em>t×C</em>{t−1}$表示希望删除的信息，$i_t×C_t$表示新增的信息。</p>
-<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/pIYBAFrr1fGAQ_DiAACnSY72yLs112.png" alt="img"></p>
-<h1 id="Bi-LSTM"><a href="#Bi-LSTM" class="headerlink" title="Bi-LSTM"></a>Bi-LSTM</h1><p>前向的LSTM与后向的LSTM结合成BiLSTM,将前向和后向的隐向量进行拼接.</p>
-<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/20200330164206271.png" alt="在这里插入图片描述"></p>
-<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/20200330164838930.png" alt="在这里插入图片描述"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>图像：2TB </li>
+</ul>
+</li>
+<li>Deepfakedetection<ul>
+<li>actor 视频<ul>
+<li>raw/0: ~200GB</li>
+<li>23: ~3GB</li>
+<li>40: ~400MB</li>
+</ul>
+</li>
+<li>manipulated 视频<ul>
+<li>raw/0: ~1.6TB</li>
+<li>c23: ~22GB</li>
+<li>c40: ~3GB</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="下载脚本"><a href="#下载脚本" class="headerlink" title="下载脚本"></a>下载脚本</h1><p><strong>运行</strong></p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">python</span> download-FaceForensics.<span class="keyword">py</span></span><br></pre></td></tr></table></figure>
+<p><strong>参数</strong></p>
+<figure class="highlight bnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">python download-FaceForensics.py</span><br><span class="line">    <span class="attribute">&lt;输出路径&gt;</span></span><br><span class="line">    -d <span class="attribute">&lt;数据集类型, Face2Face, original or all&gt;</span></span><br><span class="line">    -c <span class="attribute">&lt;压缩质量, c23 or raw&gt;</span></span><br><span class="line">    -t <span class="attribute">&lt;文件类型, videos, masks or models&gt;</span></span><br><span class="line">    -server EU2</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -320,12 +314,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/learn_blog/2024/03/24/SelfBlendedImages%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/" rel="prev" title="SelfBlendedImages论文精读">
-      <i class="fa fa-chevron-left"></i> SelfBlendedImages论文精读
+    <a href="/learn_blog/2024/03/28/EDA%E5%BC%80%E5%8F%91/" rel="prev" title="OpenGL学习">
+      <i class="fa fa-chevron-left"></i> OpenGL学习
     </a></div>
       <div class="post-nav-item">
-    <a href="/learn_blog/2024/03/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%9F%A5%E8%AF%86%E4%B8%80%E8%A7%88/" rel="next" title="图形学学习知识一览">
-      图形学学习知识一览 <i class="fa fa-chevron-right"></i>
+    <a href="/learn_blog/2024/03/29/%E5%AD%90%E8%B1%AA%E5%85%842%E5%A4%A9%E5%AE%8C%E6%88%90%E8%AE%BA%E6%96%87%E7%B3%BB%E5%88%97/" rel="next" title="子豪兄2天完成论文系列">
+      子豪兄2天完成论文系列 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -385,7 +379,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LSTM%E7%9A%84%E6%A6%82%E5%BF%B5%E4%B8%8ERNN%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">LSTM的概念与RNN的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LSTM%E7%BB%93%E6%9E%84%E5%92%8C%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">LSTM结构和原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bi-LSTM"><span class="nav-number">3.</span> <span class="nav-text">Bi-LSTM</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">数据集结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F"><span class="nav-number">2.</span> <span class="nav-text">文件大小</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E8%84%9A%E6%9C%AC"><span class="nav-number">3.</span> <span class="nav-text">下载脚本</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
