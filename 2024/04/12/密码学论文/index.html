@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/learn_blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/learn_blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/learn_blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/learn_blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/learn_blog/css/main.css">
+
+
+<link rel="stylesheet" href="/learn_blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"qinyueren.gitee.io","root":"/learn_blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="摘要在这个大数据处理、云计算、物联网等创新技术的现代时代，多媒体信息的利用日益增长。与其他形式的多媒体相比，视频在众多的多媒体物联网(IoMT)应用中被广泛利用并通过互联网和通信网络传输。因此，由于第三方对传输和存储的数字多媒体数据的利用和伪造，在现代通信网络上实现安全视频传输是非常必要的。目前在云和移动设备之间安全通信多媒体内容的方法在处理负载、内存支持、数据大小和电池电量方面受到限制。这些方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="密码学论文">
+<meta property="og:url" content="http://qinyueren.gitee.io/2024/04/12/%E5%AF%86%E7%A0%81%E5%AD%A6%E8%AE%BA%E6%96%87/index.html">
+<meta property="og:site_name" content="秦越人的博客">
+<meta property="og:description" content="摘要在这个大数据处理、云计算、物联网等创新技术的现代时代，多媒体信息的利用日益增长。与其他形式的多媒体相比，视频在众多的多媒体物联网(IoMT)应用中被广泛利用并通过互联网和通信网络传输。因此，由于第三方对传输和存储的数字多媒体数据的利用和伪造，在现代通信网络上实现安全视频传输是非常必要的。目前在云和移动设备之间安全通信多媒体内容的方法在处理负载、内存支持、数据大小和电池电量方面受到限制。这些方法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-file.jiamisoft.com/wp-content/uploads/2015/07/16.jpg?x-oss-process=image/interlace,1/quality,Q_70">
+<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/image-20240417191821165.png">
+<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/image-20240417191853861.png">
+<meta property="article:published_time" content="2024-04-12T07:51:48.795Z">
+<meta property="article:modified_time" content="2024-04-18T02:45:02.909Z">
+<meta property="article:author" content="Qinyueren">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-file.jiamisoft.com/wp-content/uploads/2015/07/16.jpg?x-oss-process=image/interlace,1/quality,Q_70">
+
+<link rel="canonical" href="http://qinyueren.gitee.io/2024/04/12/%E5%AF%86%E7%A0%81%E5%AD%A6%E8%AE%BA%E6%96%87/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>密码学论文 | 秦越人的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/learn_blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">秦越人的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Practice Tests Truth</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/learn_blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/learn_blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/learn_blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-jupyter">
+
+    <a href="/learn_blog/Jupyter/inference_image.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Jupyter</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://qinyueren.gitee.io/2024/04/12/%E5%AF%86%E7%A0%81%E5%AD%A6%E8%AE%BA%E6%96%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/learn_blog/images/avatar.gif">
+      <meta itemprop="name" content="Qinyueren">
+      <meta itemprop="description" content="Welcome to my world">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="秦越人的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          密码学论文
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-12 15:51:48" itemprop="dateCreated datePublished" datetime="2024-04-12T15:51:48+08:00">2024-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-18 10:45:02" itemprop="dateModified" datetime="2024-04-18T10:45:02+08:00">2024-04-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/learn_blog/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/learn_blog/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%AF%86%E7%A0%81%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">密码学</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在这个大数据处理、云计算、物联网等创新技术的现代时代，多媒体信息的利用日益增长。与其他形式的多媒体相比，视频在众多的多媒体物联网(IoMT)应用中被广泛利用并通过互联网和通信网络传输。因此，由于第三方对传输和存储的数字多媒体数据的利用和伪造，在现代通信网络上实现安全视频传输是非常必要的。目前在云和移动设备之间安全通信多媒体内容的方法在处理负载、内存支持、数据大小和电池电量方面受到限制。这些方法不是大型多媒体内容的最佳解决方案，也不适合移动设备和云的有限资源。<strong>高效视频编码(HEVC)</strong>是最新的现代视频编解码器标准，旨在有效地存储和流式传输具有合适大小和更高质量的高分辨率视频。本文提出了一种结合<strong>DNA(脱氧核糖核酸)序列</strong>、<strong>Arnold混沌映射</strong>和<strong>Mandelbrot集的新型混合密码系统</strong>，用于<strong>压缩HEVC流的安全传输</strong>。首先，采用H.265/HEVC编解码器对高分辨率视频进行编码，以达到高效的压缩性能;随后，将建议的Arnold混沌映射加密过程分别应用于压缩后的HEVC帧的三个信道(Y、U、V)上。然后，在先前混沌加密过程产生的主加密帧上建立DNA编码序列。然后，提出了一种改进的基于Mandelbrot集的条件移位过程，有效地引入了最终加密帧的Y、U和V信道上的混淆特征。大量的仿真结果和安全性分析表明，与文献密码系统相比，所提出的HEVC密码系统具有惊人的鲁棒性和安全性。</p>
+<h1 id="HEVC-编码"><a href="#HEVC-编码" class="headerlink" title="HEVC 编码"></a>HEVC 编码</h1><p>HEVC（高效视频编码）是一种先进的视频压缩标准，也被称为H.265和MPEG-H part 2。它是广泛使用的AVC（H.264或MPEG-4第10部分）的潜在后继者之一。HEVC的主要优势在于，在相同视频质量水平下，它能够提供大约两倍的数据压缩比，或者在相同的比特率下显著提高视频质量。这种编码标准支持高达8192×4320的分辨率，包括8K UHD（超高清）视频。1</p>
+<p>HEVC/H.265视频编解码标准由ISO与ITU共同制定，旨在提高压缩率、降低网络带宽，同时保证视频质量。它支持更大的视频尺寸和更精细的编码控制，适用于对视频质量要求更高的场合。HEVC的实现包括YUV视频信号与位流之间的相互转换。编码过程涉及将YUV视频信号经过通用编码控制得到通用控制数据，然后经过变换、缩放、量化得到量化的变换系数，接着通过帧内估计得到帧内预测数据，经过滤波控制分析得到滤波控制数据，并通过运动估计得到运动数据。这些中间结果数据加上头信息和CABAC（上下文自适应二进制算术编码）编码，最终得到编码的位流数据。解码过程则是这些编码数据的逆过程，包括位流数据的缩放、反变换、滤波控制分析、帧内估计、帧内预测、运动补偿和去块SAO滤波，最终得到视频信号。</p>
+<h1 id="DNA编码序列"><a href="#DNA编码序列" class="headerlink" title="DNA编码序列"></a>DNA编码序列</h1><p>一个链DNA，由四个不同的基本核苷酸组成：腺嘌呤( A)、胸腺嘧啶(T)、胞嘧啶(C)和鸟嘌呤(G)，这4种核苷酸能够结合在一起形成一条长序列，且A与T配对，C与G配对，00与11互补，01与10互补。这样的编码方案有24种，但只有8种编码方案满足Watson-Crick规则，如表1。</p>
+<p><img src="https://blog-file.jiamisoft.com/wp-content/uploads/2015/07/16.jpg?x-oss-process=image/interlace,1/quality,Q_70" alt="图像文件加密算法之DNA编码和斜帐篷映射"></p>
+<h1 id="Mandelbrot集合"><a href="#Mandelbrot集合" class="headerlink" title="Mandelbrot集合"></a>Mandelbrot集合</h1><p>基本思想是它是一个可以在复平面上表示的点的集合。这个平面上的每个点都可以用复数c∈c来表示，用c = x jy来表示，其中x, y∈r。</p>
+<h1 id="混沌加密"><a href="#混沌加密" class="headerlink" title="混沌加密"></a>混沌加密</h1><script type="math/tex; mode=display">
+\left[ \begin{array}{c}
+    x'\\
+    y'\\
+\end{array} \right] =A\left[ \begin{array}{c}
+    x\\
+    y\\
+\end{array} \right] \left( \text{mod\ N} \right) ,A=\left[ \begin{matrix}
+    1&        1\\
+    1&        2\\
+\end{matrix} \right]</script><script type="math/tex; mode=display">
+\left[ \begin{array}{c}
+    x_n\\
+    y_n\\
+\end{array} \right] =A^n\left[ \begin{array}{c}
+    x_0\\
+    y_0\\
+\end{array} \right] \left( \text{mod\ N} \right) ,A=\left[ \begin{matrix}
+    1&        1\\
+    1&        2\\
+\end{matrix} \right]</script><p>图像加密也称图像置乱, 是对图像的像素进行混乱和扩散, 使加密后的图像在视觉上无法获得有效信息.空域加密是常用的方法, 分为空域置乱和序列加密.空域置乱是对像素坐标进行变换使其混乱, 解密时恢复原像素坐标.图像的加密既可以作为独立的信息隐藏方法, 也可以用来作为数字水印技术中图像水印的预处理。</p>
+<p>然而此时的加密并不完全可靠, 若已知采用Arnold变换作为加密方式, 则通过暴力求解法, 经过若干次的变换还是可以解密出原图.因此在一般情况下, 我们往往需要在Arnold变换中加入密钥 (ku, kv) , 以提高安全性</p>
+<script type="math/tex; mode=display">
+\left[ \begin{array}{c}
+    x_n\\
+    y_n\\
+\end{array} \right] =A^n\left[ \begin{array}{c}
+    x_0\\
+    y_0\\
+\end{array} \right] +\left[ \begin{array}{c}
+    ku\\
+    kv\\
+\end{array} \right] \left( \text{mod\ N} \right) \left( n=1,2,... \right) ,A=\left[ \begin{matrix}
+    1&        1\\
+    1&        2\\
+\end{matrix} \right]</script><p><strong>基于三维Arnold变换的图像加密</strong></p>
+<script type="math/tex; mode=display">
+\left[ \begin{array}{c}
+    r'\\
+    g'\\
+    b'\\
+\end{array} \right] =A\left[ \begin{array}{c}
+    r\\
+    g\\
+    b\\
+\end{array} \right] \left( \text{mod\ N} \right) ,A=\left[ \begin{matrix}
+    1&        1&        1\\
+    1&        2&        2\\
+    1&        2&        3\\
+\end{matrix} \right]</script><h1 id="混合密码系统"><a href="#混合密码系统" class="headerlink" title="混合密码系统"></a>混合密码系统</h1><p>建议的HEVC密码系统包括三个主要阶段</p>
+<p>(1)基于混沌映射序列的密钥流生成;</p>
+<p>(2) DNA序列编码;</p>
+<p>(3) 扩散混淆处理。</p>
+<p>在IoMT应用中，当HEVC流传输时，该混合HEVC密码系统可以生成一种高度加密的纯压缩HEVC帧，使其不被入侵者破坏。加密过程可以用于任何hevc帧，无论大小，无论其内容特征如何。</p>
+<h2 id="混沌密钥生成"><a href="#混沌密钥生成" class="headerlink" title="混沌密钥生成"></a>混沌密钥生成</h2><p>选择Arnold混沌映射用于加密过程</p>
+<p>步骤(1):通过所使用的Arnold混沌映射(重复Arnold混沌映射t次，通过Eq.(2)生成Km)生成由三个混沌序列(S1、S2和S3)生成的三个密钥流(K1、K2和K3)。</p>
+<p>步骤(2):对得到的K1、K2、K3进行DNA序列编码处理</p>
+<h2 id="DNA序列编码"><a href="#DNA序列编码" class="headerlink" title="DNA序列编码"></a>DNA序列编码</h2><p>步骤(3):分离输入压缩HEVC帧的Y、U、V三个主要分量。</p>
+<p>步骤(4):估计生成的关键流Ki与分解后的Y、U、V三个矩阵之间的汉明距离值，如式所示。(4)至(6)。</p>
+<p>步骤(5):采用dna在HY、HU和hv上编码的策略，得到EHY、EHU和EHV dna序列的矩阵，如式所示。(7)至(9)。</p>
+<p>步骤(6):将(3)给出的关键流生成的DNA序列与(7)到(9)给出的编码DNA序列的估计矩阵进行异或运算。</p>
+<h1 id="阶段1-混沌密码生成"><a href="#阶段1-混沌密码生成" class="headerlink" title="阶段1 混沌密码生成"></a>阶段1 混沌密码生成</h1><p>CHAOTIC SECRET KEYGENERATION</p>
+<h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>使用Arnold混沌映射(重复Arnold混沌映射t次)通过以下式子生成三个混沌序列(chaotic sequences)(S1,S2,S3)</p>
+<p>产生三个秘密密匙流(K1,K2,K3)</p>
+<script type="math/tex; mode=display">
+K_m=Mod\left( \left( S_m\times 10^{10} \right) ,256 \right) \ \left( \text{for\ }m=1,2,\text{and}3 \right)</script><p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/image-20240417191821165.png" alt="image-20240417191821165"></p>
+<h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>利用DNAEncode(·)函数对得到的K1、K2、K3进行DNA序列编码处理，得到与输入HEVC帧大小相同的DNA序列(E1、E2、E3)碱基，如式所示。</p>
+<script type="math/tex; mode=display">
+E_i=DNAEncode\left( K_i \right)</script><p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/image-20240417191853861.png" alt="image-20240417191853861"></p>
+<h1 id="阶段2-DNA序列编码"><a href="#阶段2-DNA序列编码" class="headerlink" title="阶段2 DNA序列编码"></a>阶段2 DNA序列编码</h1><p>DNA SEQUENCES ENCODING</p>
+<h2 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h2><p>分离输入压缩HEVC帧的三个主要Y, U和V分量。</p>
+<h2 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4"></a>Step 4</h2><p>估计生成的密码流(Ki)与分解后的Y、U、V矩阵之间的汉明距离值。</p>
+<script type="math/tex; mode=display">
+H_Y\left( m,n \right) =HM\left( Y\left( m,n \right) ,K_1\left( m,n \right) \right)</script><script type="math/tex; mode=display">
+H_U\left( m,n \right) =HM\left( U\left( m,n \right) ,K_2\left( m,n \right) \right)</script><script type="math/tex; mode=display">
+H_V\left( m,n \right) =HM\left( V\left( m,n \right) ,K_3\left( m,n \right) \right)</script><p>利用生成的关键流与视频帧的三个分解的Y、U和V矩阵之间的汉明距离估计的目的是为了避免使用阿诺德映射可能导致的缺点。已知由Arnold映射得到的状态在多次迭代后可能是周期性的。</p>
+<h2 id="Step-5"><a href="#Step-5" class="headerlink" title="Step 5"></a>Step 5</h2><p>采用在HY、HU和hv上进行dna编码的策略，生成EHY、EHU和EHV dna序列的矩阵.</p>
+<script type="math/tex; mode=display">
+EH_Y=DNAEncode\left( H_Y \right)</script><script type="math/tex; mode=display">
+EH_U=DNAEncode\left( H_U \right)</script><script type="math/tex; mode=display">
+EH_V=DNAEncode\left( H_V \right)</script><h2 id="Step-6"><a href="#Step-6" class="headerlink" title="Step 6"></a>Step 6</h2><p>将密钥流生成的DNA序列与编码DNA序列的估计矩阵进行异或运算。</p>
+<script type="math/tex; mode=display">
+X_Y=XOR\left( EH_Y,E_1 \right)</script><script type="math/tex; mode=display">
+X_U=XOR\left( EH_U,E_2 \right)</script><script type="math/tex; mode=display">
+X_V=XOR\left( EH_V,E_3 \right)</script><h1 id="阶段3-扩散-混淆过程"><a href="#阶段3-扩散-混淆过程" class="headerlink" title="阶段3 扩散-混淆过程"></a>阶段3 扩散-混淆过程</h1><p>步骤(7):采用基于以下子步骤的混淆扩散过程，生成视频帧分量CY、CU和CV，并将它们连接起来，生成最终的加密压缩HEVC帧。混淆扩散的主要步骤描述如下</p>
+<h2 id="Step-1-1"><a href="#Step-1-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>得到输入压缩HEVC帧的Y、U、V分量的编码DNA序列的估计值</p>
+<script type="math/tex; mode=display">
+E_Y=DNAEncode\left( Y \right)</script><script type="math/tex; mode=display">
+E_U=DNAEncode\left( U \right)</script><script type="math/tex; mode=display">
+E_V=DNAEncode\left( V \right)</script><h2 id="Step-2-1"><a href="#Step-2-1" class="headerlink" title="Step 2"></a>Step 2</h2><p>接收E1、E2、E3秘钥流的编码DNA序列。</p>
+<h2 id="Step-3-1"><a href="#Step-3-1" class="headerlink" title="Step 3"></a>Step 3</h2><p>在密码流的编码DNA序列和YUV组分的编码DNA序列之间采用基于xor的DNA处理</p>
+<script type="math/tex; mode=display">
+XE_Y\left( m \right) =DNAXor\left( E_Y\left( m \right) ,E_1\left( m \right) \right)</script><script type="math/tex; mode=display">
+XE_U\left( m \right) =DNAXor\left( E_U\left( m \right) ,E_2\left( m \right) \right)</script><script type="math/tex; mode=display">
+XE_V\left( m \right) =DNAXor\left( E_V\left( m \right) ,E_3\left( m \right) \right)</script><h2 id="Step-4-1"><a href="#Step-4-1" class="headerlink" title="Step 4"></a>Step 4</h2><p>在得到的XEY、XEU和XEV上，采用算法(2)步骤中所描述的提出的条件移位机制，生成SY、SU和SV的密钥。</p>
+<h2 id="Step-5-1"><a href="#Step-5-1" class="headerlink" title="Step 5"></a>Step 5</h2><p>将DNA解码过程应用于DNA序列编码阶段(2)所传递的结果，如式所示。(19)至(21)。</p>
+<script type="math/tex; mode=display">
+D_Y=DNADecode\left( X_Y \right)</script><script type="math/tex; mode=display">
+D_U=DNADecode\left( X_U \right)</script><script type="math/tex; mode=display">
+D_V=DNADecode\left( X_V \right)</script><h2 id="Step-6-1"><a href="#Step-6-1" class="headerlink" title="Step 6"></a>Step 6</h2><p>执行基于Bit异或处理的扩散处理，得到加密后的视频帧分量CY;和CV，合并得到最终的加密压缩HEVC帧，如式所示。</p>
+<script type="math/tex; mode=display">
+C_Y\left( m \right) =\left( BitXor\left( S_Y\left( m \right) ,D_Y\left( m \right) \right) \right) \ mod\ 256</script><script type="math/tex; mode=display">
+C_U\left( m \right) =\left( BitXor\left( S_U\left( m \right) ,D_U\left( m \right) \right) \right) \,\,mod\,\,256</script><script type="math/tex; mode=display">
+C_V\left( m \right) =\left( BitXor\left( S_V\left( m \right) ,D_V\left( m \right) \right) \right) \,\,mod\,\,256</script>
+    </div>
+
+    
+    
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------已经到底啦！<i class="fa fa-paw"></i>-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/learn_blog/2024/04/11/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/" rel="prev" title="扩散模型DDPM">
+      <i class="fa fa-chevron-left"></i> 扩散模型DDPM
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/learn_blog/2024/04/12/%E6%89%A9%E6%95%A3%E5%B0%8F%E6%B3%A2/" rel="next" title="扩散小波">
+      扩散小波 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HEVC-%E7%BC%96%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">HEVC 编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DNA%E7%BC%96%E7%A0%81%E5%BA%8F%E5%88%97"><span class="nav-number">3.</span> <span class="nav-text">DNA编码序列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mandelbrot%E9%9B%86%E5%90%88"><span class="nav-number">4.</span> <span class="nav-text">Mandelbrot集合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B7%E6%B2%8C%E5%8A%A0%E5%AF%86"><span class="nav-number">5.</span> <span class="nav-text">混沌加密</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B7%E5%90%88%E5%AF%86%E7%A0%81%E7%B3%BB%E7%BB%9F"><span class="nav-number">6.</span> <span class="nav-text">混合密码系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B7%E6%B2%8C%E5%AF%86%E9%92%A5%E7%94%9F%E6%88%90"><span class="nav-number">6.1.</span> <span class="nav-text">混沌密钥生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNA%E5%BA%8F%E5%88%97%E7%BC%96%E7%A0%81"><span class="nav-number">6.2.</span> <span class="nav-text">DNA序列编码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%B6%E6%AE%B51-%E6%B7%B7%E6%B2%8C%E5%AF%86%E7%A0%81%E7%94%9F%E6%88%90"><span class="nav-number">7.</span> <span class="nav-text">阶段1 混沌密码生成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-1"><span class="nav-number">7.1.</span> <span class="nav-text">Step 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-2"><span class="nav-number">7.2.</span> <span class="nav-text">Step 2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%B6%E6%AE%B52-DNA%E5%BA%8F%E5%88%97%E7%BC%96%E7%A0%81"><span class="nav-number">8.</span> <span class="nav-text">阶段2 DNA序列编码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-3"><span class="nav-number">8.1.</span> <span class="nav-text">Step 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-4"><span class="nav-number">8.2.</span> <span class="nav-text">Step 4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-5"><span class="nav-number">8.3.</span> <span class="nav-text">Step 5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-6"><span class="nav-number">8.4.</span> <span class="nav-text">Step 6</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%B6%E6%AE%B53-%E6%89%A9%E6%95%A3-%E6%B7%B7%E6%B7%86%E8%BF%87%E7%A8%8B"><span class="nav-number">9.</span> <span class="nav-text">阶段3 扩散-混淆过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-1-1"><span class="nav-number">9.1.</span> <span class="nav-text">Step 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-2-1"><span class="nav-number">9.2.</span> <span class="nav-text">Step 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-3-1"><span class="nav-number">9.3.</span> <span class="nav-text">Step 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-4-1"><span class="nav-number">9.4.</span> <span class="nav-text">Step 4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-5-1"><span class="nav-number">9.5.</span> <span class="nav-text">Step 5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-6-1"><span class="nav-number">9.6.</span> <span class="nav-text">Step 6</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Qinyueren"
+      src="/learn_blog/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Qinyueren</p>
+  <div class="site-description" itemprop="description">Welcome to my world</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/learn_blog/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/learn_blog/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/allprover" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;allprover" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1322712308@qq.com" title="E-Mail → mailto:1322712308@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qinyueren</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">23k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:25</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/learn_blog/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/learn_blog/lib/anime.min.js"></script>
+  <script src="/learn_blog/lib/velocity/velocity.min.js"></script>
+  <script src="/learn_blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/learn_blog/js/utils.js"></script>
+
+<script src="/learn_blog/js/motion.js"></script>
+
+
+<script src="/learn_blog/js/schemes/pisces.js"></script>
+
+
+<script src="/learn_blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/learn_blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+<script src="/learn_blog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/learn_blog/live2dw/assets/shizuku.model.json"},"display":{"position":"right"},"mobile":{"show":true}});</script></body>
+</html>
+
+

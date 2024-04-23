@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/learn_blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/learn_blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/learn_blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/learn_blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/learn_blog/css/main.css">
+
+
+<link rel="stylesheet" href="/learn_blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"qinyueren.gitee.io","root":"/learn_blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="论文阅读摘要扩散模型作为一种强大的高保真图像生成解决方案正在崛起，在许多情况下，其质量超过了gan。然而，它们缓慢的训练和推理速度是一个巨大的瓶颈，阻碍了它们在实时应用中的应用。最近的一种扩散GAN方法通过将采样步骤从数千个减少到几个，显著地减少了模型的运行时间，但它们的速度仍然大大落后于GAN的同类。本文提出了一种新的基于小波的扩散方案来减小速度差距。我们通过小波分解从图像和特征层提取低频和高频">
+<meta property="og:type" content="article">
+<meta property="og:title" content="扩散小波">
+<meta property="og:url" content="http://qinyueren.gitee.io/2024/04/12/%E6%89%A9%E6%95%A3%E5%B0%8F%E6%B3%A2/index.html">
+<meta property="og:site_name" content="秦越人的博客">
+<meta property="og:description" content="论文阅读摘要扩散模型作为一种强大的高保真图像生成解决方案正在崛起，在许多情况下，其质量超过了gan。然而，它们缓慢的训练和推理速度是一个巨大的瓶颈，阻碍了它们在实时应用中的应用。最近的一种扩散GAN方法通过将采样步骤从数千个减少到几个，显著地减少了模型的运行时间，但它们的速度仍然大大落后于GAN的同类。本文提出了一种新的基于小波的扩散方案来减小速度差距。我们通过小波分解从图像和特征层提取低频和高频">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-dbcce3e1f0090d046de362305cf758fe_720w.webp">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-615663a91bf46e53ac53e408705d5f94_720w.webp">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d21153ae0c584ae19888a8a4167e1b23.png">
+<meta property="og:image" content="c:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20240422172619071.png">
+<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/image-20240422173330672.png">
+<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/image-20240422173429792.png">
+<meta property="article:published_time" content="2024-04-12T09:10:56.378Z">
+<meta property="article:modified_time" content="2024-04-22T09:34:31.917Z">
+<meta property="article:author" content="Qinyueren">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic3.zhimg.com/80/v2-dbcce3e1f0090d046de362305cf758fe_720w.webp">
+
+<link rel="canonical" href="http://qinyueren.gitee.io/2024/04/12/%E6%89%A9%E6%95%A3%E5%B0%8F%E6%B3%A2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>扩散小波 | 秦越人的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/learn_blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">秦越人的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Practice Tests Truth</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/learn_blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/learn_blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/learn_blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-jupyter">
+
+    <a href="/learn_blog/Jupyter/inference_image.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Jupyter</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://qinyueren.gitee.io/2024/04/12/%E6%89%A9%E6%95%A3%E5%B0%8F%E6%B3%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/learn_blog/images/avatar.gif">
+      <meta itemprop="name" content="Qinyueren">
+      <meta itemprop="description" content="Welcome to my world">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="秦越人的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          扩散小波
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-12 17:10:56" itemprop="dateCreated datePublished" datetime="2024-04-12T17:10:56+08:00">2024-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-22 17:34:31" itemprop="dateModified" datetime="2024-04-22T17:34:31+08:00">2024-04-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/learn_blog/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/learn_blog/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/CV%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">CV学习</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>14 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="论文阅读"><a href="#论文阅读" class="headerlink" title="论文阅读"></a>论文阅读</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>扩散模型作为一种强大的高保真图像生成解决方案正在崛起，在许多情况下，其质量超过了gan。然而，它们缓慢的训练和推理速度是一个巨大的瓶颈，阻碍了它们在实时应用中的应用。最近的一种扩散GAN方法通过将采样步骤从数千个减少到几个，显著地减少了模型的运行时间，但它们的速度仍然大大落后于GAN的同类。本文提出了一种新的基于小波的扩散方案来减小速度差距。我们通过小波分解从图像和特征层提取低频和高频成分，并自适应处理这些成分，以提高处理速度，同时保持良好的生成质量。此外，我们提出使用重构项，有效地提高了模型训练的收敛性。在CelebA-HQ, CIFAR-10, LSUN-Church和STL-10数据集上的实验结果表明，我们的解决方案是提供实时和高保真扩散模型的基石。</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>这些模型将扩散过程还原为从随机噪声输入生成干净、高质量的输出。这些技术应用于各种数据领域和应用程序，但在图像生成任务中表现出最显著的成功。在各种数据集上，扩散模型在生成质量上优于最先进的生成对抗网络(GANs)[4,38]。更值得注意的是，扩散模型提供了更好的模式覆盖[14,22,41]，并提供了一种灵活的方式来处理不同类型的条件输入，例如语义地图、文本、表示和图像[36]。。最近基于扩散的文本到图像生成模型[1,34,38]允许用户仅通过文本输入生成令人难以置信的逼真图像，开启了基于人工智能的数字艺术的新时代，并有望应用于其他各种领域。</p>
+<p>尽管扩散模型显示出巨大的潜力，但它的运行速度非常慢，这是一个关键的弱点，阻碍了它们像gan一样被广泛采用。基础工作去噪扩散概率模型(Denoising Diffusion Probabilistic Models, ddpm)[13]需要1000个采样步骤来产生所需的输出质量，需要几分钟才能生成一张图像。已经提出了许多减少推理时间的技术[25,40]，主要是通过减少采样步骤。然而，在DiffusionGAN之前最快的算法仍然需要几秒钟才能生成32×32图像，这比GAN慢了大约100倍。DiffusionGAN[50]通过将扩散和gan结合在一个系统中，在提高推理速度方面取得了突破性进展，最终将采样步骤减少到4步，生成32×32图像的推理时间缩短到几分之一秒。</p>
+<p>尽管如此，它至少比StyleGAN慢4倍，并且随着输出分辨率的增加，速度差距不断扩大。此外，DiffusionGAN仍然需要较长的训练时间和较慢的收敛速度，这证实了扩散模型还没有为大规模或实时应用做好准备。</p>
+<p>本文旨在通过引入一种新的基于小波的扩散方案来弥补速度差距。我们的解决方案依赖于离散小波变换，它将每个输入分解为低(LL)和高频(LH, HL, HH)分量的四个子带。我们在图像和特征级别上应用该变换。这使我们能够在保持输出质量相对不变的情况下显著减少训练和推理时间。在图像级别上，我们通过将空间分辨率降低四倍来获得高速提升。在特征层面上，我们强调了小波信息在发生器不同块上的重要性。通过这样的设计，我们可以在只产生边际计算开销的情况下获得相当大的性能改进。</p>
+<p>我们提出的小波扩散提供了最先进的训练和推理速度，同时保持了高生成质量，通过包括CIFAR-10, STL-10, CelebA-HQ和LSUN-Church在内的标准基准实验得到了彻底的证实。我们的模型显著减少了扩散模型和gan之间的速度差距，针对大规模和实时系统。</p>
+<ul>
+<li>我们提出了一种新的小波扩散框架，该框架利用小波子带的降维来加速扩散模型，同时通过高频分量保持生成结果的良好视觉质量。</li>
+<li>我们在图像和特征空间中使用小波分解来提高生成模型的鲁棒性和执行速度。</li>
+<li>我们提出的小波扩散提供了最先进的训练和推理速度，这是实现实时和高保真扩散模型的基石。</li>
+</ul>
+<h2 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h2><h3 id="扩散模型"><a href="#扩散模型" class="headerlink" title="扩散模型"></a>扩散模型</h3><p>扩散模型是生成模型的一种。生成模型的目的是在给定一些训练数据的情况下，学习<strong>生成数据</strong>。一个好的生成模型将能够生成一组类似训练数据的多样化输出，而不是精确的训练数据的拷贝。</p>
+<p>扩散模型成功的秘诀在于扩散过程的<strong>迭代</strong>。</p>
+<p><strong>扩散模型直观的核心思想</strong>：扩散模型的生成从随机噪声开始，<strong>经过多个步骤逐渐细化</strong>，直到出现输出图像。在每一步中，模型都会估计我们如何从当前输入变为去噪的版本。由于我们在<strong>每个步骤中只进行很小的更改</strong>，因此<strong>早期阶段的估计中的任何错误</strong>都<strong>可以在以后的更新中纠正</strong>。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-dbcce3e1f0090d046de362305cf758fe_720w.webp" alt="img"></p>
+<p>训练扩散模型，我们只需要重复以下步骤即可：</p>
+<ol>
+<li>从训练数据中<strong>加载一些图像</strong></li>
+<li><strong>添加</strong>不同量的<strong>噪音</strong></li>
+<li>将<strong>有噪声的样本</strong>输入模型中</li>
+<li>评估模型在对这些输入进行<strong>去噪</strong>方面的表现</li>
+<li>使用此信息<strong>更新模型权重</strong></li>
+</ol>
+<h4 id="前向过程"><a href="#前向过程" class="headerlink" title="前向过程"></a><strong>前向过程</strong></h4><p>扩散模型首先定义了一个前向扩散过程，总共包含<code>T</code>个时间步，如下图所示：</p>
+<p><img src="https://pic1.zhimg.com/80/v2-615663a91bf46e53ac53e408705d5f94_720w.webp" alt="img"></p>
+<p>最左边的蓝色圆圈<code>x0</code>表示真实自然图像，对应下方的狗子图片。最右边的蓝色圆圈<code>xT</code>则表示纯高斯噪声，对应下方的噪声图片。最中间的蓝色圆圈<code>xt</code>则表示加了噪声的<code>x0</code>，对应下方加了噪声的狗子图片。箭头下方的<code>q(xt|xt-1)</code>则表示一个以前一个状态<code>xt-1</code>为均值的高斯分布，<code>xt</code>从这个高斯分布中采样得到。</p>
+<p>前向扩散过程可以理解为一个马尔可夫链，即通过逐步对一张真实图片添加高斯噪声直到最终变成纯高斯噪声图片。其公式表示如下：</p>
+<p>也就是每一时间步的<code>xt</code>是从一个，以<code>1-βt</code>开根号乘以<code>xt-1</code>为均值，<code>βt</code>为方差的高斯分布中采样得到的。其中<code>βt, t ∈ [1, T]</code>是一系列固定的值，由一个公式生成。</p>
+<p>前向扩散过程有个属性，就是可以直接从<code>x0</code>采样得到中间任意一个时间步的噪声图片<code>xt</code>，公式如下：</p>
+<h4 id="反向过程"><a href="#反向过程" class="headerlink" title="反向过程"></a><strong>反向过程</strong></h4><p>反向扩散过程<code>q(xt-1|xt, x0)</code>（看粉色箭头）是前向扩散过程<code>q(xt|xt-1)</code>的后验概率分布。和前向过程相反是从最右边的纯高斯噪声图，逐步采样得到真实图像<code>x0</code>。</p>
+<h3 id="小波方法"><a href="#小波方法" class="headerlink" title="小波方法"></a>小波方法</h3><p>真实世界的数据或者信号经常表现出缓慢变化的趋势或因瞬态而出现的震荡，另一方面，图像具有被边缘中断或者<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=对比度&amp;spm=1001.2101.3001.7020">对比度</a>突然变化的平滑区域，傅里叶变换不能有效代表突然的变化，这是因为傅里叶变换将数据表示为未在时间或空间上定位的正弦波之和，这些正弦波永远震荡。</p>
+<p>为了很好准确分析突然变化的信号和图像，我们需要使用在时间和频率上都很好定位的一类新功能，就是小波变换。</p>
+<p><img src="https://img-blog.csdnimg.cn/d21153ae0c584ae19888a8a4167e1b23.png" alt="img"></p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="基于小波的扩散方案"><a href="#基于小波的扩散方案" class="headerlink" title="基于小波的扩散方案"></a>基于小波的扩散方案</h3><p>首先，我们描述了如何在扩散过程中引入小波变换。我们将输入图像分解为四个小波子带，并将它们作为单个目标连接起来进行去噪处理(如图2所示)。这种模型不是在原始图像空间上执行，而是在小波谱上执行。因此，我们的模型可以利用高频信息来进一步增加生成图像的细节。同时，小波子带的空间面积比原始图像小4倍，大大降低了采样过程的计算复杂度。</p>
+<p>我们的方法建立在DDGAN模型上，其中输入是小波变换的4个小波子带。</p>
+<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20240422172619071.png" alt="image-20240422172619071"></p>
+<p>我们的方法建立在DDGAN模型上，其中输入是小波变换的4个小波子带。给定输入图像x∈R3×H×W，我们将其分解为一组低、高子带，并将它们进一步连接形成矩阵y∈R12×H 2 ×W 2。</p>
+<p>然后，该输入通过第一个线性层投射到基本通道D，与DDGAN相比，保持网络宽度不变。因此，大多数网络都受益于空间维度减少4倍，大大减少了计算量。</p>
+<p>设y0为时间步长为t的干净样本，而yt为从q(yt|y0)采样的损坏样本。在去噪过程中，生成器接收变量yt的元组，潜函数z ~ N(0, I)和时间步长t，以生成原始信号y0的近似值:y ‘ 0 = G(yt, z, t)。然后从可处理的后验分布q(yt - 1|yt, y ‘ 0)中提取预测的噪声样本y ‘ t - 1。鉴别器的作用是区分实对(yt - 1, yt)和假对(y ‘ t - 1, yt)。</p>
+<p>根据[50]，我们通过对抗性损失来优化生成器和鉴别器</p>
+<p>在Eq.(4)中的对抗目标基础上，我们增加了一个重构项，既防止了频率信息的丢失，又保持了小波子带的一致性。它被表示为生成的图像与其基真值之间的L1损失:</p>
+<p>生成器的总体目标是对抗损失和重建损失的线性组合:</p>
+<p>经过定义的几个采样步骤后，我们获得了估计的去噪子带y ‘ 0。最后的图像可以通过小波逆变换x ‘ 0 = IWT(y ‘ 0)恢复。我们在算法1中描述了采样过程。</p>
+<h3 id="小波嵌入网络"><a href="#小波嵌入网络" class="headerlink" title="小波嵌入网络"></a>小波嵌入网络</h3><p>接下来，我们通过生成器将小波信息进一步纳入特征空间，增强对高频成分的感知。这有利于最终图像的清晰度和质量。</p>
+<p>图3说明了我们提出的小波嵌入发生器的结构。它遵循[44]的UNet结构，M个下采样和M个上采样块，加上相同分辨率的块之间的跳过连接，M是预定义的。然而，我们没有使用正常的下采样和上采样算子，而是用频率感知块代替它们。在最低分辨率下，我们采用频率瓶颈块来更好地关注低频和高频组件。最后，为了将原始信号Y合并到编码器的不同特征金字塔中，我们使用小波下采样层引入了频率残差连接。设Y为输入图像，Fi为Y的第i个中间特征映射。我们将在下面讨论新引入的分量:.</p>
+<p>频率感知下采样和上采样块。传统方法依赖于模糊核的下采样和上采样过程，以减轻混叠伪影。相反，我们利用小波变换的固有特性来进行更好的上采样和下采样(如图4所示)。实际上，这加强了对这些操作的高频信息的认识。特别是，下采样块接收输入特征Fi、潜伏z和时间嵌入t的元组，然后通过一系列层处理以返回下采样特征和高频子带。这些返回的子带作为基于上采样块中的频率线索的上采样特征的额外输入。</p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/image-20240422173330672.png" alt="image-20240422173330672"></p>
+<p>嵌入式小波发生器的说明。为了简化，忽略时间步嵌入t和潜嵌入z，而是将它们注入到去噪过程的各个块中。输入是时间步长为t的形状为[12 × H × W]的噪声小波子带，这些子带由我们提出的一系列组件处理，包括频率感知的上采样和下采样块、频率残差连接和一个全新的频率瓶颈块。模型的输出是无扰动输入的近似值。</p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/image-20240422173429792.png" alt="image-20240422173429792"></p>
+<p>频率瓶颈块位于中间阶段，中间包括两个频率瓶颈块和一个注意块。每个频率瓶颈块首先将特征映射Fi划分为低频子带Fi、ll和高频子带Fi、H的拼接。然后将Fi,ll作为输入传递给重新分配块以进行更深入的处理。处理后的低频特征映射和原高频子带Fi、H通过IWT变换回原空间。有了这样的瓶颈，该模型可以专注于学习低频子带的中间特征表示，同时保留高频细节。</p>
+<p>[44]中网络的原始设计通过跨行卷积下采样层将原始信号Y合并到编码器的不同特征金字塔中。相反，我们使用小波下采样层将输入Y的剩余快捷方式映射到相应的特征维度，然后将其添加到每个特征金字塔中。具体来说，Y的残差捷径被分解成四个子带，然后将这些子带连接并馈送到卷积层进行特征投影。这个捷径的目的是丰富对特征嵌入的频率源的感知。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>本文介绍了一种新的基于小波的扩散方案，该方案在图像保真度和采样速度方面都有优异的性能。通过对图像和特征空间进行小波变换，我们的方法可以达到扩散模型最先进的运行速度，缩小了与StyleGAN模型[19,20,57]的差距，同时获得与StyleGAN2和其他扩散模型相当的图像生成质量。此外，我们的方法提供了比基线DDGAN更快的收敛速度[50]，证实了我们提出的框架的效率。有了这些初步结果，我们希望我们的方法可以促进未来对实时和高保真扩散模型的研究。</p>
+<h1 id="代码解读"><a href="#代码解读" class="headerlink" title="代码解读"></a>代码解读</h1>
+    </div>
+
+    
+    
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------已经到底啦！<i class="fa fa-paw"></i>-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/learn_blog/2024/04/12/%E5%AF%86%E7%A0%81%E5%AD%A6%E8%AE%BA%E6%96%87/" rel="prev" title="密码学论文">
+      <i class="fa fa-chevron-left"></i> 密码学论文
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/learn_blog/2024/04/14/vscode%E9%85%8D%E7%BD%AElatex/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB"><span class="nav-number">1.</span> <span class="nav-text">论文阅读</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86"><span class="nav-number">1.3.</span> <span class="nav-text">相关知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.3.1.</span> <span class="nav-text">扩散模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E5%90%91%E8%BF%87%E7%A8%8B"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">前向过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E8%BF%87%E7%A8%8B"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">反向过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E6%B3%A2%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.2.</span> <span class="nav-text">小波方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%B0%8F%E6%B3%A2%E7%9A%84%E6%89%A9%E6%95%A3%E6%96%B9%E6%A1%88"><span class="nav-number">1.4.1.</span> <span class="nav-text">基于小波的扩散方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E6%B3%A2%E5%B5%8C%E5%85%A5%E7%BD%91%E7%BB%9C"><span class="nav-number">1.4.2.</span> <span class="nav-text">小波嵌入网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.5.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.6.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB"><span class="nav-number">2.</span> <span class="nav-text">代码解读</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Qinyueren"
+      src="/learn_blog/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Qinyueren</p>
+  <div class="site-description" itemprop="description">Welcome to my world</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/learn_blog/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/learn_blog/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/allprover" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;allprover" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1322712308@qq.com" title="E-Mail → mailto:1322712308@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qinyueren</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">23k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:25</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/learn_blog/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/learn_blog/lib/anime.min.js"></script>
+  <script src="/learn_blog/lib/velocity/velocity.min.js"></script>
+  <script src="/learn_blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/learn_blog/js/utils.js"></script>
+
+<script src="/learn_blog/js/motion.js"></script>
+
+
+<script src="/learn_blog/js/schemes/pisces.js"></script>
+
+
+<script src="/learn_blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/learn_blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+<script src="/learn_blog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/learn_blog/live2dw/assets/shizuku.model.json"},"display":{"position":"right"},"mobile":{"show":true}});</script></body>
+</html>
+
+

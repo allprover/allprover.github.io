@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/learn_blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/learn_blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/learn_blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/learn_blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/learn_blog/css/main.css">
+
+
+<link rel="stylesheet" href="/learn_blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"qinyueren.gitee.io","root":"/learn_blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="摘要在过去的十年中，各种各样的深度生成模型得到了发展。然而，这些模型经常在同时解决三个关键需求方面挣扎，包括:高样本质量、模式覆盖和快速采样。我们把这些需求带来的挑战称为生成学习三难困境，因为现有的模型经常用其中的一些来交换其他的。特别是，去噪扩散模型已经显示出令人印象深刻的样本质量和多样性，但是它们昂贵的采样还不允许它们在许多实际应用中应用。在本文中，我们认为这些模型中的缓慢采样基本上归因于去噪">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DDGAN">
+<meta property="og:url" content="http://qinyueren.gitee.io/2024/04/22/DDGAN/index.html">
+<meta property="og:site_name" content="秦越人的博客">
+<meta property="og:description" content="摘要在过去的十年中，各种各样的深度生成模型得到了发展。然而，这些模型经常在同时解决三个关键需求方面挣扎，包括:高样本质量、模式覆盖和快速采样。我们把这些需求带来的挑战称为生成学习三难困境，因为现有的模型经常用其中的一些来交换其他的。特别是，去噪扩散模型已经显示出令人印象深刻的样本质量和多样性，但是它们昂贵的采样还不允许它们在许多实际应用中应用。在本文中，我们认为这些模型中的缓慢采样基本上归因于去噪">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-04-22T08:18:08.195Z">
+<meta property="article:modified_time" content="2024-04-22T09:06:45.825Z">
+<meta property="article:author" content="Qinyueren">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://qinyueren.gitee.io/2024/04/22/DDGAN/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>DDGAN | 秦越人的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/learn_blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">秦越人的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Practice Tests Truth</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/learn_blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/learn_blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/learn_blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-jupyter">
+
+    <a href="/learn_blog/Jupyter/inference_image.html" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Jupyter</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://qinyueren.gitee.io/2024/04/22/DDGAN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/learn_blog/images/avatar.gif">
+      <meta itemprop="name" content="Qinyueren">
+      <meta itemprop="description" content="Welcome to my world">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="秦越人的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DDGAN
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-04-22 16:18:08 / 修改时间：17:06:45" itemprop="dateCreated datePublished" datetime="2024-04-22T16:18:08+08:00">2024-04-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/learn_blog/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/learn_blog/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/CV%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">CV学习</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>919</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在过去的十年中，各种各样的深度生成模型得到了发展。然而，这些模型经常在同时解决三个关键需求方面挣扎，包括:高样本质量、模式覆盖和快速采样。我们把这些需求带来的挑战称为生成学习三难困境，因为现有的模型经常用其中的一些来交换其他的。特别是，去噪扩散模型已经显示出令人印象深刻的样本质量和多样性，但是它们昂贵的采样还不允许它们在许多实际应用中应用。在本文中，我们认为这些模型中的缓慢采样基本上归因于去噪步骤中的高斯假设，该假设仅适用于小步长。为了实现大步长的去噪，从而减少去噪的总步数，我们建议使用复杂的多模态分布来建模去噪分布。我们引入去噪扩散生成对抗网络(去噪扩散GAN)，该网络使用多模态条件GAN对每个去噪步骤进行建模。通过广泛的评估，我们表明去噪扩散gan获得了与原始扩散模型竞争的样本质量和多样性，同时在CIFAR-10数据集上速度提高了2000倍。与传统gan相比，我们的模型具有更好的模式覆盖和样本多样性。据我们所知，去噪扩散GAN是第一个将扩散模型中的采样成本降低到一定程度的模型，使其能够以低廉的成本应用于现实世界。</p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>在过去的十年中，已经为图像等各个领域开发了大量的深度生成模型(Karras等人，2019;Razavi等人，2019)，音频(Oord等人，2016a;Kong等人，2021)，点云(Yang等人，2019)和图(De Cao &amp; Kipf, 2018)。然而，当前的生成式学习框架还不能同时满足三个关键要求，而这些要求通常是在现实世界问题中广泛采用的必要条件。这些要求包括(i)高质量采样，(ii)模式覆盖和样本多样性，以及(iii)快速且计算成本低廉的采样。例如，目前大多数图像合成工作都集中在高质量生成上。然而，模式覆盖和数据多样性对于更好地代表少数群体和减少生成模型的负面社会影响非常重要。此外，交互式图像编辑或实时语音合成等应用需要快速采样。在这里，我们将这些需求带来的挑战确定为生成学习三难困境，因为现有模型通常在两者之间妥协。</p>
+<p>在本文中，我们通过重新制定专门用于快速采样的去噪扩散模型来解决生成学习三难困境，同时保持强模式覆盖和样本质量。我们研究了扩散模型的慢采样问题，我们观察到扩散模型通常假设去噪分布可以用高斯分布近似。然而，众所周知，高斯假设仅适用于小去噪步骤的无穷小极限(Sohl-Dickstein et al.， 2015;Feller, 1949)，这导致逆向过程需要大量的步骤。当反向过程使用较大的步长(即，它具有较少的去噪步骤)时，我们需要一个非高斯多模态分布来建模去噪分布。直观地说，在图像合成中，多模态分布源于多个可信的干净图像可能对应于相同的噪声图像。</p>
+
+    </div>
+
+    
+    
+    
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------已经到底啦！<i class="fa fa-paw"></i>-------------</div>
+    
+</div>
+
+      
+    </div>
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/learn_blog/2024/04/22/%E8%BE%85%E5%8A%A9%E6%80%A7%E4%BB%B7%E6%AF%94%E6%8F%90%E5%8D%87%E8%AE%A1%E5%88%92/" rel="prev" title="法系机制">
+      <i class="fa fa-chevron-left"></i> 法系机制
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Qinyueren"
+      src="/learn_blog/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Qinyueren</p>
+  <div class="site-description" itemprop="description">Welcome to my world</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/learn_blog/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/learn_blog/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/allprover" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;allprover" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1322712308@qq.com" title="E-Mail → mailto:1322712308@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qinyueren</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">23k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:25</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/learn_blog/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/learn_blog/lib/anime.min.js"></script>
+  <script src="/learn_blog/lib/velocity/velocity.min.js"></script>
+  <script src="/learn_blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/learn_blog/js/utils.js"></script>
+
+<script src="/learn_blog/js/motion.js"></script>
+
+
+<script src="/learn_blog/js/schemes/pisces.js"></script>
+
+
+<script src="/learn_blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/learn_blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+<script src="/learn_blog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/learn_blog/live2dw/assets/shizuku.model.json"},"display":{"position":"right"},"mobile":{"show":true}});</script></body>
+</html>
+
+
