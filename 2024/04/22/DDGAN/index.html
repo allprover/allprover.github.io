@@ -20,17 +20,20 @@
     var CONFIG = {"hostname":"qinyueren.gitee.io","root":"/learn_blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="摘要在过去的十年中，各种各样的深度生成模型得到了发展。然而，这些模型经常在同时解决三个关键需求方面挣扎，包括:高样本质量、模式覆盖和快速采样。我们把这些需求带来的挑战称为生成学习三难困境，因为现有的模型经常用其中的一些来交换其他的。特别是，去噪扩散模型已经显示出令人印象深刻的样本质量和多样性，但是它们昂贵的采样还不允许它们在许多实际应用中应用。在本文中，我们认为这些模型中的缓慢采样基本上归因于去噪">
+  <meta name="description" content="这篇工作在原始的DDPM(去噪扩散概率模型)的基础上进行改进，针对扩散模型生成样本&#x2F;采样速度慢的问题提出解决方案，同时保留了扩散模型高采样质量、模式覆盖多&#x2F;多样性的优势。 动机作者提出当下的生成学习框架无法很好地同时满足以下三个要求:  高采样质量 模式覆盖与多样性 快速的、低计算开销的采样  作者首先讨论了为什么去噪过程需要小的步长，这也是导致去噪过程总步数多、采样速度慢的主要原因；接着作者提出">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DDGAN">
 <meta property="og:url" content="http://qinyueren.gitee.io/2024/04/22/DDGAN/index.html">
 <meta property="og:site_name" content="秦越人的博客">
-<meta property="og:description" content="摘要在过去的十年中，各种各样的深度生成模型得到了发展。然而，这些模型经常在同时解决三个关键需求方面挣扎，包括:高样本质量、模式覆盖和快速采样。我们把这些需求带来的挑战称为生成学习三难困境，因为现有的模型经常用其中的一些来交换其他的。特别是，去噪扩散模型已经显示出令人印象深刻的样本质量和多样性，但是它们昂贵的采样还不允许它们在许多实际应用中应用。在本文中，我们认为这些模型中的缓慢采样基本上归因于去噪">
+<meta property="og:description" content="这篇工作在原始的DDPM(去噪扩散概率模型)的基础上进行改进，针对扩散模型生成样本&#x2F;采样速度慢的问题提出解决方案，同时保留了扩散模型高采样质量、模式覆盖多&#x2F;多样性的优势。 动机作者提出当下的生成学习框架无法很好地同时满足以下三个要求:  高采样质量 模式覆盖与多样性 快速的、低计算开销的采样  作者首先讨论了为什么去噪过程需要小的步长，这也是导致去噪过程总步数多、采样速度慢的主要原因；接着作者提出">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-924d66e448d6e6afa87ddf4d8b72f289_720w.webp">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-ecf3b5a746af919383819f765456827f_720w.webp">
 <meta property="article:published_time" content="2024-04-22T08:18:08.195Z">
-<meta property="article:modified_time" content="2024-04-22T09:06:45.825Z">
+<meta property="article:modified_time" content="2024-04-25T08:11:53.580Z">
 <meta property="article:author" content="Qinyueren">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic2.zhimg.com/80/v2-924d66e448d6e6afa87ddf4d8b72f289_720w.webp">
 
 <link rel="canonical" href="http://qinyueren.gitee.io/2024/04/22/DDGAN/">
 
@@ -212,10 +215,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-04-22 16:18:08 / 修改时间：17:06:45" itemprop="dateCreated datePublished" datetime="2024-04-22T16:18:08+08:00">2024-04-22</time>
+              <time title="创建时间：2024-04-22 16:18:08" itemprop="dateCreated datePublished" datetime="2024-04-22T16:18:08+08:00">2024-04-22</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-25 16:11:53" itemprop="dateModified" datetime="2024-04-25T16:11:53+08:00">2024-04-25</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -236,7 +245,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>919</span>
+              <span>887</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -255,9 +264,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在过去的十年中，各种各样的深度生成模型得到了发展。然而，这些模型经常在同时解决三个关键需求方面挣扎，包括:高样本质量、模式覆盖和快速采样。我们把这些需求带来的挑战称为生成学习三难困境，因为现有的模型经常用其中的一些来交换其他的。特别是，去噪扩散模型已经显示出令人印象深刻的样本质量和多样性，但是它们昂贵的采样还不允许它们在许多实际应用中应用。在本文中，我们认为这些模型中的缓慢采样基本上归因于去噪步骤中的高斯假设，该假设仅适用于小步长。为了实现大步长的去噪，从而减少去噪的总步数，我们建议使用复杂的多模态分布来建模去噪分布。我们引入去噪扩散生成对抗网络(去噪扩散GAN)，该网络使用多模态条件GAN对每个去噪步骤进行建模。通过广泛的评估，我们表明去噪扩散gan获得了与原始扩散模型竞争的样本质量和多样性，同时在CIFAR-10数据集上速度提高了2000倍。与传统gan相比，我们的模型具有更好的模式覆盖和样本多样性。据我们所知，去噪扩散GAN是第一个将扩散模型中的采样成本降低到一定程度的模型，使其能够以低廉的成本应用于现实世界。</p>
-<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>在过去的十年中，已经为图像等各个领域开发了大量的深度生成模型(Karras等人，2019;Razavi等人，2019)，音频(Oord等人，2016a;Kong等人，2021)，点云(Yang等人，2019)和图(De Cao &amp; Kipf, 2018)。然而，当前的生成式学习框架还不能同时满足三个关键要求，而这些要求通常是在现实世界问题中广泛采用的必要条件。这些要求包括(i)高质量采样，(ii)模式覆盖和样本多样性，以及(iii)快速且计算成本低廉的采样。例如，目前大多数图像合成工作都集中在高质量生成上。然而，模式覆盖和数据多样性对于更好地代表少数群体和减少生成模型的负面社会影响非常重要。此外，交互式图像编辑或实时语音合成等应用需要快速采样。在这里，我们将这些需求带来的挑战确定为生成学习三难困境，因为现有模型通常在两者之间妥协。</p>
-<p>在本文中，我们通过重新制定专门用于快速采样的去噪扩散模型来解决生成学习三难困境，同时保持强模式覆盖和样本质量。我们研究了扩散模型的慢采样问题，我们观察到扩散模型通常假设去噪分布可以用高斯分布近似。然而，众所周知，高斯假设仅适用于小去噪步骤的无穷小极限(Sohl-Dickstein et al.， 2015;Feller, 1949)，这导致逆向过程需要大量的步骤。当反向过程使用较大的步长(即，它具有较少的去噪步骤)时，我们需要一个非高斯多模态分布来建模去噪分布。直观地说，在图像合成中，多模态分布源于多个可信的干净图像可能对应于相同的噪声图像。</p>
+        <p>这篇工作在原始的DDPM(去噪扩散概率模型)的基础上进行改进，针对扩散模型生成样本/采样速度慢的问题提出解决方案，同时保留了扩散模型高采样质量、模式覆盖多/多样性的优势。</p>
+<h1 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h1><p>作者提出当下的生成学习框架无法很好地同时满足以下三个要求:</p>
+<ol>
+<li>高采样质量</li>
+<li>模式覆盖与多样性</li>
+<li>快速的、低计算开销的采样</li>
+</ol>
+<p>作者首先讨论了为什么去噪过程需要小的步长，这也是导致去噪过程总步数多、采样速度慢的主要原因；接着作者提出了解决方案，即对于去噪过程的模型，用多模态分布代替原始Diffusion Model中的高斯分布。</p>
+<p>去噪分布是高斯分布这一前提假设导致小的步长不可避免，从而导致总步数多，采样慢。</p>
+<p>因此，自然地能够想到要增大步长以减小去噪过程的总步数，就需要更换假设，用别的分布来建模真实的去噪分布。作者从数据分布入手:</p>
+<p><img src="https://pic2.zhimg.com/80/v2-924d66e448d6e6afa87ddf4d8b72f289_720w.webp" alt="img"></p>
+<p>其中第一行是正向扩散过程中，数据分布 q(x_0) 的变化过程；第二行是给定固定的 x5 ，改变步长得到的真实去噪分布。</p>
+<p>从图中我们可以看到，在正向加噪过程中随着逐步地添加高斯噪声，数据分布越来越接近单模的高斯分布；而在去噪过程中，如果我们如同原始设定一样用小的步长，一次只走一步,那么真实去噪分布是接近高斯分布的，但当步长增加时分布变得更加复杂以及多模态。</p>
+<p>针对这种现象，作者提出用更有表达能力的多模态分布来建模这个去噪分布。由于条件GAN已被证明可以在图片领域建模复杂的条件分布，作者选用条件GAN来估计真实去噪分布.</p>
+<h1 id="设定"><a href="#设定" class="headerlink" title="设定"></a>设定</h1><p>前向扩散过程与原来的DDPM模型一致</p>
+<p>训练目标方面，训练旨在利用最小化对抗性损失，这个对抗性损失能够最小化散度</p>
+<p>从而提高条件GAN的生成器 与 真实去噪分布 的匹配程度</p>
+<p>具体到对抗训练方面，与时间有关的判别器。让来自真实分布的样本输出的置信度尽可能高，来着虚假样本输出置信度尽可能低。</p>
+<h1 id="重参数"><a href="#重参数" class="headerlink" title="重参数"></a>重参数</h1><p>相比于原来的DDPM，现在的去噪模型更加复杂，且是一个隐式的模型(原来的建模只是简单的高斯分布)。但是由于正向扩散过程仍然是加的高斯噪声，因此无论步长多大或者数据分布多复杂，依然有$$服从高斯分布这一性质、</p>
+<ol>
+<li>原DDPM是以确定的映射方式由x_t预测x_0,而作者的设计中x_0是由带随机隐变量z的生成器得到的。使得去噪分布模型变得多模态且更复杂，而原DDPM的去噪模型是简单的、单模态的高斯分布。</li>
+<li>对于不同的时间t，x_t相对于原始图像的扰动程度是不同的。作者的生成器只需要预测未经扰动的x_0燃火再利用$$加回扰动</li>
+</ol>
+<p><img src="https://pic4.zhimg.com/80/v2-ecf3b5a746af919383819f765456827f_720w.webp" alt="img"></p>
 
     </div>
 
@@ -283,10 +313,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/learn_blog/2024/04/22/%E8%BE%85%E5%8A%A9%E6%80%A7%E4%BB%B7%E6%AF%94%E6%8F%90%E5%8D%87%E8%AE%A1%E5%88%92/" rel="prev" title="法系机制">
-      <i class="fa fa-chevron-left"></i> 法系机制
+    <a href="/learn_blog/2024/04/22/%E8%BE%85%E5%8A%A9%E6%80%A7%E4%BB%B7%E6%AF%94%E6%8F%90%E5%8D%87%E8%AE%A1%E5%88%92/" rel="prev" title="提升计划">
+      <i class="fa fa-chevron-left"></i> 提升计划
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/learn_blog/2024/04/27/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E6%A3%80%E6%B5%8B/" rel="next" title="扩散模型检测">
+      扩散模型检测 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -345,7 +378,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E5%AE%9A"><span class="nav-number">2.</span> <span class="nav-text">设定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E5%8F%82%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">重参数</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -361,7 +394,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/learn_blog/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -416,12 +449,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">23k</span>
+    <span title="站点总字数">27k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:25</span>
+    <span title="站点阅读时长">1:38</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
@@ -481,6 +514,61 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

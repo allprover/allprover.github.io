@@ -20,17 +20,23 @@
     var CONFIG = {"hostname":"qinyueren.gitee.io","root":"/learn_blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="、">
+  <meta name="description" content="介绍扩散模型的基石：DDPM(Denoising Diffusion Probalistic Models)[2020] DDPM的本质作用，就是学习训练数据的分布，产出尽可能符合训练数据分布的真实图片。 训练流程总体来说，DDPM的训练过程分为2步">
 <meta property="og:type" content="article">
 <meta property="og:title" content="扩散模型DDPM">
 <meta property="og:url" content="http://qinyueren.gitee.io/2024/04/11/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="秦越人的博客">
-<meta property="og:description" content="、">
+<meta property="og:description" content="介绍扩散模型的基石：DDPM(Denoising Diffusion Probalistic Models)[2020] DDPM的本质作用，就是学习训练数据的分布，产出尽可能符合训练数据分布的真实图片。 训练流程总体来说，DDPM的训练过程分为2步">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-b09b3294fb90384713d784776508b680_720w.webp">
+<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/v2-bfb330873e0c590511bdc369dafcd037_r.jpg">
+<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/9577221c43fb4f0f9945df1d99ead8be.png">
+<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/9a30c7f9446e480783a807c6f9b3010f.png">
+<meta property="og:image" content="https://gitee.com/qinyueren/drawing-bed/raw/master/v2-eccb6db63e1bc0d88a57455d46b7bac2_r.jpg">
 <meta property="article:published_time" content="2024-04-11T07:05:07.747Z">
-<meta property="article:modified_time" content="2024-04-22T09:07:46.780Z">
+<meta property="article:modified_time" content="2024-04-29T07:55:20.766Z">
 <meta property="article:author" content="Qinyueren">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic1.zhimg.com/80/v2-b09b3294fb90384713d784776508b680_720w.webp">
 
 <link rel="canonical" href="http://qinyueren.gitee.io/2024/04/11/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/">
 
@@ -220,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-22 17:07:46" itemprop="dateModified" datetime="2024-04-22T17:07:46+08:00">2024-04-22</time>
+                <time title="修改时间：2024-04-29 15:55:20" itemprop="dateModified" datetime="2024-04-29T15:55:20+08:00">2024-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,14 +248,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>1.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -261,7 +267,86 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>、</p>
+        <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>扩散模型的基石：<strong>DDPM(Denoising Diffusion Probalistic Models)</strong>[2020]</p>
+<p>DDPM的本质作用，就是学习训练数据的分布，产出尽可能符合<strong>训练数据分布</strong>的真实图片。</p>
+<h1 id="训练流程"><a href="#训练流程" class="headerlink" title="训练流程"></a>训练流程</h1><p>总体来说，DDPM的训练过程分为2步</p>
+<ul>
+<li>Diffusion Process (Forward Process)</li>
+<li>Denoise Process (Reverse Process)</li>
+</ul>
+<p>而 DDPM 的目的是要去学习训练数据的分布，然后产出和训练数据分布相似的图片。</p>
+<p><strong>思路</strong></p>
+<p>拿一张干净的图，每一步(timestep)都往上加一点噪音，然后在每一步里，都让模型去找到加噪前图片的样子，也就是去噪。</p>
+<p>训练完毕后，我们再拿出一张纯噪声图，让它帮我们还原出原始图片的分布。</p>
+<ul>
+<li>Diffusion Process:一步步加噪的过程</li>
+<li>Denoise Process:一步步去噪的过程</li>
+</ul>
+<h2 id="Diffusion-Process"><a href="#Diffusion-Process" class="headerlink" title="Diffusion Process"></a>Diffusion Process</h2><p>Diffusion Process的命名受到热力学中分子扩散的启发：分子从高浓度区域扩散至低浓度区域，直至整个系统处于平衡。加噪过程也是同理，每次往图片上增加一些噪声，直至图片变为一个纯噪声为止。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-b09b3294fb90384713d784776508b680_720w.webp" alt="img"></p>
+<p>我们对图片进行了1000步加噪，且每一步添加的都是高斯噪声，直到图片变成一个纯高斯分布的噪声。</p>
+<p><strong>数字符号标记</strong></p>
+<ul>
+<li>$T$:总步数</li>
+<li>$x_0,x_1,…,x_T$:每步产生的图片。其中$x_0$为原始图片,$x_T$为纯高斯噪声</li>
+<li>$\epsilon \sim N\left( 0,I \right)$:为每一步添加的高斯噪声</li>
+<li>$q\left( x<em>t|x</em>{t-1} \right) $:$x<em>t$在条件$x=x</em>{t-1}$下的概率分布。</li>
+</ul>
+<p>根据以上流程，我们有：$x<em>t=x</em>{t-1}+\epsilon=x_0+\epsilon_0+\epsilon_1+…+\epsilon$</p>
+<p>但是，为了得到x_t，需要sample好多次噪声</p>
+<p><strong>重参数</strong></p>
+<p>为了解决这种不方便的情况，我们加入权重。</p>
+<p>随着步数的增加，图片的原始信息越少，噪声越多。</p>
+<p>于是乎，加入一系列常数$\bar{\alpha}_1,\bar{\alpha}_2,…,\bar{\alpha}_T$，随着T的增加越来越少</p>
+<p>此时可以设置为</p>
+<script type="math/tex; mode=display">
+x_t=\sqrt{\bar{\alpha}_t}x_0+\sqrt{1-\bar{\alpha}_t}\epsilon</script><p>这时，我们只需sample一次噪声，就可以从x_0得到x_t</p>
+<p>那么使得$q\left( x<em>t|x</em>{t-1} \right) $转换成$q\left( x<em>t|x</em>{0} \right) $的过程，就成为重参数</p>
+<h2 id="Denoise-Process"><a href="#Denoise-Process" class="headerlink" title="Denoise Process"></a>Denoise Process</h2><p>Denoise Process的过程与Diffusion Process刚好相反：给定x<em>t，让模型能把它还原到x</em>{t-1}。</p>
+<p>用$q\left( x<em>t|x</em>{t-1} \right) $来表示加噪过程，则用$p\left( x<em>{t-1}|x</em>{t} \right) $来表示去噪过程</p>
+<p>由于加噪过程是按照设定好的超参数进行前向加噪，不存在训练的过程。</p>
+<p>但去噪过程是真正训练并使用模型的过程。于是我们再加入一个模型参数</p>
+<p>即：$p<em>\theta\left( x</em>{t-1}|x_{t} \right) $</p>
+<p>如图，从第T个timestep开始，模型的输入为x_t和当前的t，模型中还包含一个噪声预测器（UNet），它会根据当前的输入预测出噪声，然后，将当前图片减去预测出来的噪声，就得到去噪后的图片。且重复这个过程，直到还原原始图片x_0。</p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/v2-bfb330873e0c590511bdc369dafcd037_r.jpg" alt="img"></p>
+<h2 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h2><p>在重参数的表达下，第t个时刻的输入图片可以表示为：</p>
+<script type="math/tex; mode=display">
+x_t=\sqrt{\bar{\alpha}_t}x_0+\sqrt{1-\bar{\alpha}_t}\epsilon</script><p>而第t个时刻sample出的噪声$\epsilon \sim N\left( 0,I \right)$，为我们的噪声真值。</p>
+<p>预测出来的噪声为：</p>
+<script type="math/tex; mode=display">
+\epsilon _{\theta}\left( \sqrt{\bar{\alpha}_t}x_0+\sqrt{1-\bar{\alpha}_t}\epsilon ,t \right)</script><p>则loss为：</p>
+<script type="math/tex; mode=display">
+\epsilon -\epsilon _{\theta}\left( \sqrt{\bar{\alpha}_t}x_0+\sqrt{1-\bar{\alpha}_t}\epsilon ,t \right)</script><p>我们要做的是将Loss最小化</p>
+<p><strong>由于不管对任何输入数据，不管对它的任何一步，模型在每一步做的都是去预测一个来自高斯分布的噪声</strong>。因此，整个训练过程可以设置为：</p>
+<ul>
+<li>从训练数据中，sample出条x_0</li>
+<li>随机sample出一个timestep</li>
+<li>随机sample出一个噪声</li>
+<li>计算Loss</li>
+<li>计算梯度，更新模型，重复上述操作，直至收敛</li>
+</ul>
+<h2 id="Sampling"><a href="#Sampling" class="headerlink" title="Sampling"></a>Sampling</h2><p>将DDPM训练好后，我们该去使用它，并评估它</p>
+<p>我们从最后一个时刻（T）开始，传入一个纯噪声（或者是一张加了噪声的图片），逐步去噪。</p>
+<p>根据$x<em>t=\sqrt{\bar{\alpha}_t}x_0+\sqrt{1-\bar{\alpha}_t}\epsilon$ 可以推出 x_t与 x</em>{t-1}的关系(具体推导后面解释)</p>
+<p>通过上述方式产生的 x_0 ，我们可以计算它和真实图片分布之间的相似度</p>
+<p><strong>插值方法</strong></p>
+<p>先对两张任意的真实图片做Diffusion过程，然后分别给它们的diffusion结果附不同的权重，将两者diffusion结果加权相加后，再做Denoise流程，就可以得到一张很有意思的”混合人脸”。</p>
+<blockquote>
+<p>这个方法很关键，有启发性，可以试试替代SBI</p>
+</blockquote>
+<h2 id="Unet"><a href="#Unet" class="headerlink" title="Unet"></a>Unet</h2><p>我们将它分为2部分</p>
+<ul>
+<li>Encoder</li>
+<li>Decoder</li>
+</ul>
+<p><strong>在Encoder部分中，UNet模型会逐步压缩图片的大小；在Decoder部分中，则会逐步还原图片的大小</strong>。</p>
+<p>时在Encoder和Deocder间，还会使用“<strong>残差连接</strong>”，确保Decoder部分在推理和还原图片信息时，不会丢失掉之前步骤的信息。整体过程示意图如下，因为压缩再放大的过程形似”U”字，因此被称为UNet.</p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/9577221c43fb4f0f9945df1d99ead8be.png" alt="img"></p>
+<p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/9a30c7f9446e480783a807c6f9b3010f.png" alt="img"></p>
+<h2 id="DownBlock和UpBlock"><a href="#DownBlock和UpBlock" class="headerlink" title="DownBlock和UpBlock"></a>DownBlock和UpBlock</h2><p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/v2-eccb6db63e1bc0d88a57455d46b7bac2_r.jpg" alt="img"></p>
+<p>TimeEmbedding层采用和Transformer一致的三角函数位置编码，将常数转变为向量。Attention层则是沿着channel维度将图片拆分为token，做完attention后再重新组装成图片</p>
+<p>需要关注的是，<strong>虚线部分即为“残差连接”（Residual Connection）</strong>，而残差连接之上引入的<strong>虚线框Conv的意思是</strong>，如果in_c = out_c，则对in_c做一次卷积，使得其通道数等于out_c后，再相加；否则将直接相加</p>
+<h2 id="DownSample和UpSample"><a href="#DownSample和UpSample" class="headerlink" title="DownSample和UpSample"></a>DownSample和UpSample</h2><p>这个模块很简单，就是<strong>压缩(Conv)</strong>和<strong>放大(ConvT)</strong>图片的过程。</p>
 
     </div>
 
@@ -352,6 +437,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">训练流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Diffusion-Process"><span class="nav-number">2.1.</span> <span class="nav-text">Diffusion Process</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Denoise-Process"><span class="nav-number">2.2.</span> <span class="nav-text">Denoise Process</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Training"><span class="nav-number">2.3.</span> <span class="nav-text">Training</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sampling"><span class="nav-number">2.4.</span> <span class="nav-text">Sampling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unet"><span class="nav-number">2.5.</span> <span class="nav-text">Unet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DownBlock%E5%92%8CUpBlock"><span class="nav-number">2.6.</span> <span class="nav-text">DownBlock和UpBlock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DownSample%E5%92%8CUpSample"><span class="nav-number">2.7.</span> <span class="nav-text">DownSample和UpSample</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -367,7 +453,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/learn_blog/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -422,12 +508,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">23k</span>
+    <span title="站点总字数">27k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:25</span>
+    <span title="站点阅读时长">1:38</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
@@ -487,6 +573,61 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
