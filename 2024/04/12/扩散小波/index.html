@@ -17,13 +17,13 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"allprover.github.io","root":"/allprover.github.io/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"allprover","root":"/allprover.github.io/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="论文阅读摘要扩散模型作为一种强大的高保真图像生成解决方案正在崛起，在许多情况下，其质量超过了gan。然而，它们缓慢的训练和推理速度是一个巨大的瓶颈，阻碍了它们在实时应用中的应用。最近的一种扩散GAN方法通过将采样步骤从数千个减少到几个，显著地减少了模型的运行时间，但它们的速度仍然大大落后于GAN的同类。本文提出了一种新的基于小波的扩散方案来减小速度差距。我们通过小波分解从图像和特征层提取低频和高频">
 <meta property="og:type" content="article">
 <meta property="og:title" content="扩散小波">
-<meta property="og:url" content="https://allprover.github.io/allprover.github.io/2024/04/12/%E6%89%A9%E6%95%A3%E5%B0%8F%E6%B3%A2/index.html">
+<meta property="og:url" content="https://allprover/allprover.github.io/2024/04/12/%E6%89%A9%E6%95%A3%E5%B0%8F%E6%B3%A2/index.html">
 <meta property="og:site_name" content="秦越人的博客">
 <meta property="og:description" content="论文阅读摘要扩散模型作为一种强大的高保真图像生成解决方案正在崛起，在许多情况下，其质量超过了gan。然而，它们缓慢的训练和推理速度是一个巨大的瓶颈，阻碍了它们在实时应用中的应用。最近的一种扩散GAN方法通过将采样步骤从数千个减少到几个，显著地减少了模型的运行时间，但它们的速度仍然大大落后于GAN的同类。本文提出了一种新的基于小波的扩散方案来减小速度差距。我们通过小波分解从图像和特征层提取低频和高频">
 <meta property="og:locale" content="zh_CN">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/d21153ae0c584ae19888a8a4167e1b23.png">
 
-<link rel="canonical" href="https://allprover.github.io/allprover.github.io/2024/04/12/%E6%89%A9%E6%95%A3%E5%B0%8F%E6%B3%A2/">
+<link rel="canonical" href="https://allprover/allprover.github.io/2024/04/12/%E6%89%A9%E6%95%A3%E5%B0%8F%E6%B3%A2/">
 
 
 <script id="page-configurations">
@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://allprover.github.io/allprover.github.io/2024/04/12/%E6%89%A9%E6%95%A3%E5%B0%8F%E6%B3%A2/">
+    <link itemprop="mainEntityOfPage" href="https://allprover/allprover.github.io/2024/04/12/%E6%89%A9%E6%95%A3%E5%B0%8F%E6%B3%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/allprover.github.io/images/avatar.gif">
