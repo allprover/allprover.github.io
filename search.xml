@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>UCINET社交网络分析</title>
-    <url>/main/2024/03/23/UCINET%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90/</url>
+    <url>/allprover.github.io/2024/03/23/UCINET%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90/</url>
     <content><![CDATA[<h1 id="1-共现矩阵"><a href="#1-共现矩阵" class="headerlink" title="1.共现矩阵"></a>1.共现矩阵</h1><h2 id="灰度共生矩阵"><a href="#灰度共生矩阵" class="headerlink" title="灰度共生矩阵"></a>灰度共生矩阵</h2><ul>
 <li>先将图像转换成灰度图片</li>
 <li>然后再用<code>graycomatirx</code>函数进行共生矩阵计算</li>
@@ -117,7 +117,7 @@
   </entry>
   <entry>
     <title>Hexo安装和配置next主题</title>
-    <url>/main/2024/03/22/%E5%AE%89%E8%A3%85Hexo%E5%92%8C%E9%85%8D%E7%BD%AEnext/</url>
+    <url>/allprover.github.io/2024/03/22/%E5%AE%89%E8%A3%85Hexo%E5%92%8C%E9%85%8D%E7%BD%AEnext/</url>
     <content><![CDATA[<h1 id="1-安装Hexo"><a href="#1-安装Hexo" class="headerlink" title="1.安装Hexo"></a>1.安装Hexo</h1><p>Hexo 依赖了 Node.js 和 Git，所以在安装 Hexo 之前必须确保安装了这两个工具.</p>
 <h2 id="1-2-安装Node-js"><a href="#1-2-安装Node-js" class="headerlink" title="1.2 安装Node.js"></a>1.2 安装Node.js</h2><p>下载：<a href="https://link.zhihu.com/?target=https%3A//nodejs.org/en/download/">https://nodejs.org/en/download/</a></p>
 <p>安装完</p>
@@ -230,7 +230,7 @@
   </entry>
   <entry>
     <title>法系机制</title>
-    <url>/main/2024/03/22/%E6%B3%95%E7%B3%BB%E6%9C%BA%E5%88%B6/</url>
+    <url>/allprover.github.io/2024/03/22/%E6%B3%95%E7%B3%BB%E6%9C%BA%E5%88%B6/</url>
     <content><![CDATA[<h1 id="1-门派的分灵机制"><a href="#1-门派的分灵机制" class="headerlink" title="1. 门派的分灵机制"></a>1. 门派的分灵机制</h1><h2 id="1-1-作用目标影响分灵系数"><a href="#1-1-作用目标影响分灵系数" class="headerlink" title="1.1 作用目标影响分灵系数"></a>1.1 作用目标影响分灵系数</h2><ol>
 <li>当作用目标≤3时，分灵系数为$1-N\times0.1$，其中N为目标人数</li>
 <li>当作用目标=4时，初始目标(3个)分灵系数为70%，额外目标分灵系数为60%</li>
@@ -542,7 +542,7 @@
   </entry>
   <entry>
     <title>Deepfake Detection All model 一览</title>
-    <url>/main/2024/03/22/%E6%89%80%E6%9C%89%E6%A8%A1%E5%9E%8B%E4%B8%80%E8%A7%88/</url>
+    <url>/allprover.github.io/2024/03/22/%E6%89%80%E6%9C%89%E6%A8%A1%E5%9E%8B%E4%B8%80%E8%A7%88/</url>
     <content><![CDATA[<h1 id="Deep-Learing-深度学习"><a href="#Deep-Learing-深度学习" class="headerlink" title="Deep Learing(深度学习)"></a>Deep Learing(深度学习)</h1><h2 id="CNN-卷积神经网络"><a href="#CNN-卷积神经网络" class="headerlink" title="CNN(卷积神经网络)"></a>CNN(卷积神经网络)</h2><ul>
 <li>XceptionNet</li>
 <li>VGG</li>
@@ -641,7 +641,7 @@
   </entry>
   <entry>
     <title>清点资源</title>
-    <url>/main/2024/03/22/%E6%B8%85%E7%82%B9%E8%B5%84%E6%BA%90/</url>
+    <url>/allprover.github.io/2024/03/22/%E6%B8%85%E7%82%B9%E8%B5%84%E6%BA%90/</url>
     <content><![CDATA[<h1 id="清点资源"><a href="#清点资源" class="headerlink" title="清点资源"></a>清点资源</h1><h2 id="人物情况"><a href="#人物情况" class="headerlink" title="人物情况"></a>人物情况</h2><h3 id="等级与经验"><a href="#等级与经验" class="headerlink" title="等级与经验"></a>等级与经验</h3><p>总经验25 E</p>
 <p>等级：144</p>
 <p>目前经验4000万</p>
@@ -701,7 +701,7 @@
   </entry>
   <entry>
     <title>SelfBlendedImages论文精读</title>
-    <url>/main/2024/03/24/SelfBlendedImages%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/</url>
+    <url>/allprover.github.io/2024/03/24/SelfBlendedImages%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/</url>
     <content><![CDATA[<h1 id="1-论文解读"><a href="#1-论文解读" class="headerlink" title="1. 论文解读"></a>1. 论文解读</h1><h1 id="2-代码运行"><a href="#2-代码运行" class="headerlink" title="2. 代码运行"></a>2. 代码运行</h1><h2 id="2-1-环境"><a href="#2-1-环境" class="headerlink" title="2.1 环境"></a>2.1 环境</h2><p>下载 <code>requirements.txt</code></p>
 <p>并运行</p>
 <p><code>!pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple</code></p>
@@ -766,7 +766,7 @@
   </entry>
   <entry>
     <title>LSTM长短期记忆</title>
-    <url>/main/2024/03/25/LSTM%E9%95%BF%E7%9F%AD%E6%9C%9F%E8%AE%B0%E5%BF%86/</url>
+    <url>/allprover.github.io/2024/03/25/LSTM%E9%95%BF%E7%9F%AD%E6%9C%9F%E8%AE%B0%E5%BF%86/</url>
     <content><![CDATA[<h1 id="LSTM的概念与RNN的区别"><a href="#LSTM的概念与RNN的区别" class="headerlink" title="LSTM的概念与RNN的区别"></a>LSTM的概念与RNN的区别</h1><p>LSTM（Long Short-Term Memory）是一种长短期记忆网络，是一种特殊的RNN（循环神经网络）。与传统的RNN相比，LSTM更加适用于处理和预测时间序列中间隔较长的重要事件。</p>
 <p>传统的RNN结构可以看做是多个重复的神经元构成的“回路”，每个神经元都接受输入信息并产生输出，然后将输出再次作为下一个神经元的输入，依次传递下去。这种结构能够在序列数据上学习短时依赖关系，但是由于梯度消失和梯度爆炸问题，RNN在处理长序列时难以达到很好的性能。</p>
 <p>而LSTM通过引入记忆细胞、输入门、输出门和遗忘门的概念，能够有效地解决长序列问题。</p>
@@ -811,7 +811,7 @@
   </entry>
   <entry>
     <title>OpenGL学习</title>
-    <url>/main/2024/03/26/OpenGL%E5%AD%A6%E4%B9%A0/</url>
+    <url>/allprover.github.io/2024/03/26/OpenGL%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[]]></content>
       <categories>
         <category>计算机</category>
@@ -820,7 +820,7 @@
   </entry>
   <entry>
     <title>图形学学习知识一览</title>
-    <url>/main/2024/03/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%9F%A5%E8%AF%86%E4%B8%80%E8%A7%88/</url>
+    <url>/allprover.github.io/2024/03/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%9F%A5%E8%AF%86%E4%B8%80%E8%A7%88/</url>
     <content><![CDATA[<h1 id="OpenGL"><a href="#OpenGL" class="headerlink" title="OpenGL"></a>OpenGL</h1><h2 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h2><p><a href="https://learnopengl-cn.github.io/">主页 - LearnOpenGL CN (learnopengl-cn.github.io)</a></p>
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>OpenGL</strong>（英语：Open Graphics Library，译名：开放图形库或者“开放式图形库”）是用于渲染2D、3D矢量图形的跨语言、跨平台的应用程序编程接口（API）。这个接口由近350个不同的函数调用组成，用来绘制从简单的图形到比较复杂的三维景象。而另一种程序接口系统是仅用于Microsoft Windows上的Direct3D。OpenGL常用于CAD、虚拟现实、科学可视化程序和电子游戏开发。</p>
 <h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><ul>
@@ -883,7 +883,7 @@
   </entry>
   <entry>
     <title>OpenGL学习</title>
-    <url>/main/2024/03/28/EDA%E5%BC%80%E5%8F%91/</url>
+    <url>/allprover.github.io/2024/03/28/EDA%E5%BC%80%E5%8F%91/</url>
     <content><![CDATA[<h1 id="ASIC设计"><a href="#ASIC设计" class="headerlink" title="ASIC设计"></a>ASIC设计</h1><h2 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h2><p><strong>确定项目需求</strong></p>
 <ul>
 <li>物理实现(制作工艺、面积、封装)</li>
@@ -942,7 +942,7 @@
   </entry>
   <entry>
     <title>FF++下载脚本</title>
-    <url>/main/2024/03/28/FF++%E4%B8%8B%E8%BD%BD%E8%84%9A%E6%9C%AC/</url>
+    <url>/allprover.github.io/2024/03/28/FF++%E4%B8%8B%E8%BD%BD%E8%84%9A%E6%9C%AC/</url>
     <content><![CDATA[<h1 id="数据集结构"><a href="#数据集结构" class="headerlink" title="数据集结构"></a>数据集结构</h1><figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">FaceForensics++ dataset</span><br><span class="line"><span class="string">|-- downloaded_videos</span></span><br><span class="line"><span class="meta">#包含所有原始下载的视频、视频信息文件及其提取的序列,可用于提取数据集中使用的原始序列</span></span><br><span class="line">      </span><br><span class="line"><span class="string">|-- original_sequences</span></span><br><span class="line">    <span class="string">|-- youtube</span></span><br><span class="line">    <span class="meta"># c0/raw 原始序列 图像或者视频 的 FaceForensics++ 数据集</span></span><br><span class="line">    <span class="meta"># c23/hq 原始序列 图像或者视频</span></span><br><span class="line">    <span class="meta"># c40/lq 原始序列 图像或者视频</span></span><br><span class="line">    </span><br><span class="line">    <span class="string">|-- actors</span></span><br><span class="line">    <span class="meta"># 来自 DeepFakeDetection 的图像或者视频</span></span><br><span class="line">       </span><br><span class="line"><span class="string">|-- manipulated_sequences</span></span><br><span class="line">    <span class="string">|-- Deepfakes</span></span><br><span class="line">    <span class="meta"># 所有三个压缩度的图像/视频以及泊松图像编辑后的模型和遮罩</span></span><br><span class="line">       </span><br><span class="line">    <span class="string">|-- DeepFakeDetection</span></span><br><span class="line">    <span class="meta"># 所有三个压缩度的图像/视频以及泊松图像编辑后的模型和遮罩 </span></span><br><span class="line">        </span><br><span class="line">    <span class="string">|-- Face2Face</span></span><br><span class="line">    <span class="meta"># 所有三个压缩度的图像/视频以及泊松图像编辑后的模型和遮罩</span></span><br><span class="line">    </span><br><span class="line">    <span class="string">|-- FaceSwap</span></span><br><span class="line">    <span class="meta"># 所有三个压缩度的图像/视频以及泊松图像编辑后的模型和遮罩</span></span><br><span class="line">    </span><br><span class="line">    <span class="string">|-- NeuralTextures</span></span><br><span class="line">    <span class="meta"># 所有三个压缩度的图像/视频以及泊松图像编辑后的模型和遮罩   </span></span><br></pre></td></tr></table></figure>
 <h1 id="文件大小"><a href="#文件大小" class="headerlink" title="文件大小"></a>文件大小</h1><ul>
 <li>FaceForensics++<ul>
@@ -990,7 +990,7 @@
   </entry>
   <entry>
     <title>icpr2020论文精读</title>
-    <url>/main/2024/03/27/icpr2020%E7%B2%BE%E8%AF%BB/</url>
+    <url>/allprover.github.io/2024/03/27/icpr2020%E7%B2%BE%E8%AF%BB/</url>
     <content><![CDATA[<h1 id="1-论文精读"><a href="#1-论文精读" class="headerlink" title="1. 论文精读"></a>1. 论文精读</h1><h2 id="EfficientNet"><a href="#EfficientNet" class="headerlink" title="EfficientNet"></a>EfficientNet</h2><h1 id="2-代码运行"><a href="#2-代码运行" class="headerlink" title="2. 代码运行"></a>2. 代码运行</h1><p><strong>数据集初始化</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">!python index_dfdc.py --<span class="built_in">source</span> <span class="string">&quot;/home/jovyan/work/icpr2020/dfdc&quot;</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">parse_args</span>(<span class="params">argv</span>):</span><br><span class="line">    parser = argparse.ArgumentParser()</span><br><span class="line">    <span class="comment"># 路径应该写成 50个子数据集的根目录</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--source&#x27;</span>, <span class="built_in">type</span>=Path, <span class="built_in">help</span>=<span class="string">&#x27;Source dir&#x27;</span>, required=<span class="literal">True</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--videodataset&#x27;</span>, <span class="built_in">type</span>=Path, default=<span class="string">&#x27;data/dfdc_videos.pkl&#x27;</span>,</span><br><span class="line">                        <span class="built_in">help</span>=<span class="string">&#x27;Path to save the videos DataFrame&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--batch&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&#x27;Batch size&#x27;</span>, default=<span class="number">64</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> parser.parse_args(argv)</span><br></pre></td></tr></table></figure>
@@ -1018,7 +1018,7 @@
   </entry>
   <entry>
     <title>子豪兄2天完成论文系列之预测图像</title>
-    <url>/main/2024/03/29/%E5%AD%90%E8%B1%AA%E5%85%842%E5%A4%A9%E5%AE%8C%E6%88%90%E8%AE%BA%E6%96%87%E7%B3%BB%E5%88%97/</url>
+    <url>/allprover.github.io/2024/03/29/%E5%AD%90%E8%B1%AA%E5%85%842%E5%A4%A9%E5%AE%8C%E6%88%90%E8%AE%BA%E6%96%87%E7%B3%BB%E5%88%97/</url>
     <content><![CDATA[<h1 id="1-预测单张图像"><a href="#1-预测单张图像" class="headerlink" title="1 预测单张图像"></a>1 预测单张图像</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
 <h2 id="设备"><a href="#设备" class="headerlink" title="设备"></a>设备</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 有 GPU 就用 GPU，没有就用 CPU</span></span><br><span class="line">device = torch.device(<span class="string">&#x27;cuda:0&#x27;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&#x27;cpu&#x27;</span>)</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;device&#x27;</span>, device)</span><br></pre></td></tr></table></figure>
@@ -1049,7 +1049,7 @@
   </entry>
   <entry>
     <title>DDGAN</title>
-    <url>/main/2024/04/22/DDGAN/</url>
+    <url>/allprover.github.io/2024/04/22/DDGAN/</url>
     <content><![CDATA[<p>这篇工作在原始的DDPM(去噪扩散概率模型)的基础上进行改进，针对扩散模型生成样本/采样速度慢的问题提出解决方案，同时保留了扩散模型高采样质量、模式覆盖多/多样性的优势。</p>
 <h1 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h1><p>作者提出当下的生成学习框架无法很好地同时满足以下三个要求:</p>
 <ol>
@@ -1082,7 +1082,7 @@
   </entry>
   <entry>
     <title></title>
-    <url>/main/2024/04/14/vscode%E9%85%8D%E7%BD%AElatex/</url>
+    <url>/allprover.github.io/2024/04/14/vscode%E9%85%8D%E7%BD%AElatex/</url>
     <content><![CDATA[<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20240414093501867.png" alt="image-20240414093501867"></p>
 <p><img src="https://gitee.com/qinyueren/drawing-bed/raw/master/image-20240414093602496.png" alt="image-20240414093602496"></p>
 <figure class="highlight prolog"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;latex-workshop.latex.autoBuild.run&quot;</span>: <span class="string">&quot;never&quot;</span>,</span><br><span class="line">    <span class="string">&quot;latex-workshop.showContextMenu&quot;</span>: true,</span><br><span class="line">    <span class="string">&quot;latex-workshop.intellisense.package.enabled&quot;</span>: true,</span><br><span class="line">    <span class="string">&quot;latex-workshop.message.error.show&quot;</span>: false,</span><br><span class="line">    <span class="string">&quot;latex-workshop.message.warning.show&quot;</span>: false,</span><br><span class="line">    <span class="string">&quot;latex-workshop.latex.tools&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;name&quot;</span>: <span class="string">&quot;xelatex&quot;</span>,</span><br><span class="line">            <span class="string">&quot;command&quot;</span>: <span class="string">&quot;xelatex&quot;</span>,</span><br><span class="line">            <span class="string">&quot;args&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;-synctex=1&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-interaction=nonstopmode&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-file-line-error&quot;</span>,</span><br><span class="line">                <span class="string">&quot;%DOCFILE%&quot;</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;name&quot;</span>: <span class="string">&quot;pdflatex&quot;</span>,</span><br><span class="line">            <span class="string">&quot;command&quot;</span>: <span class="string">&quot;pdflatex&quot;</span>,</span><br><span class="line">            <span class="string">&quot;args&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;-synctex=1&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-interaction=nonstopmode&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-file-line-error&quot;</span>,</span><br><span class="line">                <span class="string">&quot;%DOCFILE%&quot;</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;name&quot;</span>: <span class="string">&quot;latexmk&quot;</span>,</span><br><span class="line">            <span class="string">&quot;command&quot;</span>: <span class="string">&quot;latexmk&quot;</span>,</span><br><span class="line">            <span class="string">&quot;args&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;-synctex=1&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-interaction=nonstopmode&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-file-line-error&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-pdf&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-outdir=%OUTDIR%&quot;</span>,</span><br><span class="line">                <span class="string">&quot;%DOCFILE%&quot;</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;name&quot;</span>: <span class="string">&quot;bibtex&quot;</span>,</span><br><span class="line">            <span class="string">&quot;command&quot;</span>: <span class="string">&quot;bibtex&quot;</span>,</span><br><span class="line">            <span class="string">&quot;args&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;%DOCFILE%&quot;</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;latex-workshop.latex.recipes&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;name&quot;</span>: <span class="string">&quot;XeLaTeX&quot;</span>,</span><br><span class="line">            <span class="string">&quot;tools&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;xelatex&quot;</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;name&quot;</span>: <span class="string">&quot;PDFLaTeX&quot;</span>,</span><br><span class="line">            <span class="string">&quot;tools&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;pdflatex&quot;</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;name&quot;</span>: <span class="string">&quot;BibTeX&quot;</span>,</span><br><span class="line">            <span class="string">&quot;tools&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;bibtex&quot;</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;name&quot;</span>: <span class="string">&quot;LaTeXmk&quot;</span>,</span><br><span class="line">            <span class="string">&quot;tools&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;latexmk&quot;</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;name&quot;</span>: <span class="string">&quot;xelatex -&gt; bibtex -&gt; xelatex*2&quot;</span>,</span><br><span class="line">            <span class="string">&quot;tools&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;xelatex&quot;</span>,</span><br><span class="line">                <span class="string">&quot;bibtex&quot;</span>,</span><br><span class="line">                <span class="string">&quot;xelatex&quot;</span>,</span><br><span class="line">                <span class="string">&quot;xelatex&quot;</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;name&quot;</span>: <span class="string">&quot;pdflatex -&gt; bibtex -&gt; pdflatex*2&quot;</span>,</span><br><span class="line">            <span class="string">&quot;tools&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;pdflatex&quot;</span>,</span><br><span class="line">                <span class="string">&quot;bibtex&quot;</span>,</span><br><span class="line">                <span class="string">&quot;pdflatex&quot;</span>,</span><br><span class="line">                <span class="string">&quot;pdflatex&quot;</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;latex-workshop.latex.clean.fileTypes&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;*.aux&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.bbl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.blg&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.idx&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.ind&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.lof&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.lot&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.out&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.toc&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.acn&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.acr&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.alg&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.glg&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.glo&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.gls&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.ist&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.fls&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.log&quot;</span>,</span><br><span class="line">        <span class="string">&quot;*.fdb_latexmk&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;latex-workshop.latex.autoClean.run&quot;</span>: <span class="string">&quot;onFailed&quot;</span>,</span><br><span class="line">    <span class="string">&quot;latex-workshop.latex.recipe.default&quot;</span>: <span class="string">&quot;lastUsed&quot;</span>,</span><br><span class="line">    <span class="string">&quot;latex-workshop.view.pdf.internal.synctex.keybinding&quot;</span>: <span class="string">&quot;double-click&quot;</span></span><br></pre></td></tr></table></figure>
@@ -1090,7 +1090,7 @@
   </entry>
   <entry>
     <title>宠修</title>
-    <url>/main/2024/03/31/%E5%AE%A0%E4%BF%AE/</url>
+    <url>/allprover.github.io/2024/03/31/%E5%AE%A0%E4%BF%AE/</url>
     <content><![CDATA[<h1 id="秘传"><a href="#秘传" class="headerlink" title="秘传"></a>秘传</h1><p><strong>每天10点准时抢点</strong></p>
 <p>缴纳28w现金和28w储备</p>
 <p>任务上交1-2个环装</p>
@@ -1105,7 +1105,7 @@
   </entry>
   <entry>
     <title>密码学论文</title>
-    <url>/main/2024/04/12/%E5%AF%86%E7%A0%81%E5%AD%A6%E8%AE%BA%E6%96%87/</url>
+    <url>/allprover.github.io/2024/04/12/%E5%AF%86%E7%A0%81%E5%AD%A6%E8%AE%BA%E6%96%87/</url>
     <content><![CDATA[<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在这个大数据处理、云计算、物联网等创新技术的现代时代，多媒体信息的利用日益增长。与其他形式的多媒体相比，视频在众多的多媒体物联网(IoMT)应用中被广泛利用并通过互联网和通信网络传输。因此，由于第三方对传输和存储的数字多媒体数据的利用和伪造，在现代通信网络上实现安全视频传输是非常必要的。目前在云和移动设备之间安全通信多媒体内容的方法在处理负载、内存支持、数据大小和电池电量方面受到限制。这些方法不是大型多媒体内容的最佳解决方案，也不适合移动设备和云的有限资源。<strong>高效视频编码(HEVC)</strong>是最新的现代视频编解码器标准，旨在有效地存储和流式传输具有合适大小和更高质量的高分辨率视频。本文提出了一种结合<strong>DNA(脱氧核糖核酸)序列</strong>、<strong>Arnold混沌映射</strong>和<strong>Mandelbrot集的新型混合密码系统</strong>，用于<strong>压缩HEVC流的安全传输</strong>。首先，采用H.265/HEVC编解码器对高分辨率视频进行编码，以达到高效的压缩性能;随后，将建议的Arnold混沌映射加密过程分别应用于压缩后的HEVC帧的三个信道(Y、U、V)上。然后，在先前混沌加密过程产生的主加密帧上建立DNA编码序列。然后，提出了一种改进的基于Mandelbrot集的条件移位过程，有效地引入了最终加密帧的Y、U和V信道上的混淆特征。大量的仿真结果和安全性分析表明，与文献密码系统相比，所提出的HEVC密码系统具有惊人的鲁棒性和安全性。</p>
 <h1 id="HEVC-编码"><a href="#HEVC-编码" class="headerlink" title="HEVC 编码"></a>HEVC 编码</h1><p>HEVC（高效视频编码）是一种先进的视频压缩标准，也被称为H.265和MPEG-H part 2。它是广泛使用的AVC（H.264或MPEG-4第10部分）的潜在后继者之一。HEVC的主要优势在于，在相同视频质量水平下，它能够提供大约两倍的数据压缩比，或者在相同的比特率下显著提高视频质量。这种编码标准支持高达8192×4320的分辨率，包括8K UHD（超高清）视频。1</p>
 <p>HEVC/H.265视频编解码标准由ISO与ITU共同制定，旨在提高压缩率、降低网络带宽，同时保证视频质量。它支持更大的视频尺寸和更精细的编码控制，适用于对视频质量要求更高的场合。HEVC的实现包括YUV视频信号与位流之间的相互转换。编码过程涉及将YUV视频信号经过通用编码控制得到通用控制数据，然后经过变换、缩放、量化得到量化的变换系数，接着通过帧内估计得到帧内预测数据，经过滤波控制分析得到滤波控制数据，并通过运动估计得到运动数据。这些中间结果数据加上头信息和CABAC（上下文自适应二进制算术编码）编码，最终得到编码的位流数据。解码过程则是这些编码数据的逆过程，包括位流数据的缩放、反变换、滤波控制分析、帧内估计、帧内预测、运动补偿和去块SAO滤波，最终得到视频信号。</p>
@@ -1223,7 +1223,7 @@ C_V\left( m \right) =\left( BitXor\left( S_V\left( m \right) ,D_V\left( m \right
   </entry>
   <entry>
     <title>幂率分布</title>
-    <url>/main/2024/04/07/%E5%B9%82%E7%8E%87%E5%88%86%E5%B8%83/</url>
+    <url>/allprover.github.io/2024/04/07/%E5%B9%82%E7%8E%87%E5%88%86%E5%B8%83/</url>
     <content><![CDATA[<h1 id="幂率分布"><a href="#幂率分布" class="headerlink" title="幂率分布"></a>幂率分布</h1><h2 id="概率函数"><a href="#概率函数" class="headerlink" title="概率函数"></a>概率函数</h2><p>假设变量x服从参数为 $\alpha$的幂率分布,其概率密度函数可以表示为</p>
 <script type="math/tex; mode=display">
 f(x)=cx^{-\alpha-1},x→∞</script><h2 id="通式"><a href="#通式" class="headerlink" title="通式"></a>通式</h2><script type="math/tex; mode=display">
@@ -1249,7 +1249,7 @@ lny=lnc-rlnx</script><h2 id="图像"><a href="#图像" class="headerlink" title=
   </entry>
   <entry>
     <title>扩散小波</title>
-    <url>/main/2024/04/12/%E6%89%A9%E6%95%A3%E5%B0%8F%E6%B3%A2/</url>
+    <url>/allprover.github.io/2024/04/12/%E6%89%A9%E6%95%A3%E5%B0%8F%E6%B3%A2/</url>
     <content><![CDATA[<h1 id="论文阅读"><a href="#论文阅读" class="headerlink" title="论文阅读"></a>论文阅读</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>扩散模型作为一种强大的高保真图像生成解决方案正在崛起，在许多情况下，其质量超过了gan。然而，它们缓慢的训练和推理速度是一个巨大的瓶颈，阻碍了它们在实时应用中的应用。最近的一种扩散GAN方法通过将采样步骤从数千个减少到几个，显著地减少了模型的运行时间，但它们的速度仍然大大落后于GAN的同类。本文提出了一种新的基于小波的扩散方案来减小速度差距。我们通过小波分解从图像和特征层提取低频和高频成分，并自适应处理这些成分，以提高处理速度，同时保持良好的生成质量。此外，我们提出使用重构项，有效地提高了模型训练的收敛性。在CelebA-HQ, CIFAR-10, LSUN-Church和STL-10数据集上的实验结果表明，我们的解决方案是提供实时和高保真扩散模型的基石。</p>
 <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>这些模型将扩散过程还原为从随机噪声输入生成干净、高质量的输出。这些技术应用于各种数据领域和应用程序，但在图像生成任务中表现出最显著的成功。在各种数据集上，扩散模型在生成质量上优于最先进的生成对抗网络(GANs)[4,38]。更值得注意的是，扩散模型提供了更好的模式覆盖[14,22,41]，并提供了一种灵活的方式来处理不同类型的条件输入，例如语义地图、文本、表示和图像[36]。。最近基于扩散的文本到图像生成模型[1,34,38]允许用户仅通过文本输入生成令人难以置信的逼真图像，开启了基于人工智能的数字艺术的新时代，并有望应用于其他各种领域。</p>
 <p>尽管扩散模型显示出巨大的潜力，但它的运行速度非常慢，这是一个关键的弱点，阻碍了它们像gan一样被广泛采用。基础工作去噪扩散概率模型(Denoising Diffusion Probabilistic Models, ddpm)[13]需要1000个采样步骤来产生所需的输出质量，需要几分钟才能生成一张图像。已经提出了许多减少推理时间的技术[25,40]，主要是通过减少采样步骤。然而，在DiffusionGAN之前最快的算法仍然需要几秒钟才能生成32×32图像，这比GAN慢了大约100倍。DiffusionGAN[50]通过将扩散和gan结合在一个系统中，在提高推理速度方面取得了突破性进展，最终将采样步骤减少到4步，生成32×32图像的推理时间缩短到几分之一秒。</p>
@@ -1290,7 +1290,7 @@ lny=lnc-rlnx</script><h2 id="图像"><a href="#图像" class="headerlink" title=
   </entry>
   <entry>
     <title>扩散模型DDPM</title>
-    <url>/main/2024/04/11/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/</url>
+    <url>/allprover.github.io/2024/04/11/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/</url>
     <content><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>扩散模型的基石：<strong>DDPM(Denoising Diffusion Probalistic Models)</strong>[2020]</p>
 <p>DDPM的本质作用，就是学习训练数据的分布，产出尽可能符合<strong>训练数据分布</strong>的真实图片。</p>
 <h1 id="训练流程"><a href="#训练流程" class="headerlink" title="训练流程"></a>训练流程</h1><p>总体来说，DDPM的训练过程分为2步</p>
@@ -1379,7 +1379,7 @@ x_t=\sqrt{\bar{\alpha}_t}x_0+\sqrt{1-\bar{\alpha}_t}\epsilon</script><p>而第t�
   </entry>
   <entry>
     <title>提升计划</title>
-    <url>/main/2024/04/22/%E8%BE%85%E5%8A%A9%E6%80%A7%E4%BB%B7%E6%AF%94%E6%8F%90%E5%8D%87%E8%AE%A1%E5%88%92/</url>
+    <url>/allprover.github.io/2024/04/22/%E8%BE%85%E5%8A%A9%E6%80%A7%E4%BB%B7%E6%AF%94%E6%8F%90%E5%8D%87%E8%AE%A1%E5%88%92/</url>
     <content><![CDATA[<h1 id="日常规划"><a href="#日常规划" class="headerlink" title="日常规划"></a>日常规划</h1><h2 id="单人日常"><a href="#单人日常" class="headerlink" title="单人日常"></a>单人日常</h2><p><strong>师门</strong></p>
 <p>30分钟，30w梦幻币收益</p>
 <p><strong>押镖</strong></p>
@@ -1437,7 +1437,7 @@ x_t=\sqrt{\bar{\alpha}_t}x_0+\sqrt{1-\bar{\alpha}_t}\epsilon</script><p>而第t�
   </entry>
   <entry>
     <title>扩散模型检测</title>
-    <url>/main/2024/04/27/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E6%A3%80%E6%B5%8B/</url>
+    <url>/allprover.github.io/2024/04/27/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E6%A3%80%E6%B5%8B/</url>
     <content><![CDATA[<h1 id="引用核心"><a href="#引用核心" class="headerlink" title="引用核心"></a>引用核心</h1><p>【论文1】D4: Detection of Adversarial Diffusion Deepfakes Using Disjoint Ensembles[D4:利用不相交频谱子集检测对抗性扩散深度伪造,2024,WACV]</p>
 <p>【论文2】On the Vulnerability of Deepfake Detectors to Attacks Generated by Denoising Diffusion Models [基于去噪扩散模型的Deepfake检测器脆弱性研究,2024,WACV]</p>
 <p>【论文3】Deepfake Forensics via An Adversarial Game[通过对抗性游戏进行深度取证,2022,IEEE TRANSACTIONS ON IMAGE PROCESSIN]</p>
@@ -1513,7 +1513,7 @@ x_t=\sqrt{\bar{\alpha}_t}x_0+\sqrt{1-\bar{\alpha}_t}\epsilon</script><p>而第t�
   </entry>
   <entry>
     <title>H.264</title>
-    <url>/main/2024/05/16/H.264/</url>
+    <url>/allprover.github.io/2024/05/16/H.264/</url>
     <content><![CDATA[<h1 id="H264-简介"><a href="#H264-简介" class="headerlink" title="H264 简介"></a>H264 简介</h1><p>H.264，同时也是 MPEG-4 第十部分，是由 ITU-T 视频编码专家组（VCEG）和 ISO/IEC 动态图像专家组（MPEG）联合组成的联合视频组（JVT，Joint Video Team）提出的高度压缩数字视频编解码器标准。这个标准通常被称之为 H.264/AVC（或者 AVC/H.264 或者 H.264/MPEG-4 AVC 或 MPEG-4/H.264 AVC）。是一种面向块，基于运动补偿的视频编码标准。</p>
 <p>视频编码其本质就是将<a href="https://so.csdn.net/so/search?q=数据压缩&amp;spm=1001.2101.3001.7020">数据压缩</a>，主要是去除冗余信息（包括空间上的冗余信息和时间上的冗余信息），从而实现数据量的压缩。</p>
 <ul>
@@ -1583,7 +1583,7 @@ x_t=\sqrt{\bar{\alpha}_t}x_0+\sqrt{1-\bar{\alpha}_t}\epsilon</script><p>而第t�
   </entry>
   <entry>
     <title>人脸识别对齐</title>
-    <url>/main/2024/06/17/insightface/</url>
+    <url>/allprover.github.io/2024/06/17/insightface/</url>
     <content><![CDATA[<h1 id="1快速上手"><a href="#1快速上手" class="headerlink" title="1快速上手"></a>1快速上手</h1><p>在【python-package】目录下执行</p>
 <figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">pip <span class="keyword">install</span> .</span><br></pre></td></tr></table></figure>
 ]]></content>
